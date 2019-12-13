@@ -1,17 +1,24 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
+    <Navigation/>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <VehicleCard/>
+
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import Navigation from './components/Navigation.vue'
+import VehicleCard from './components/VehicleCard.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    Navigation,
+    VehicleCard
   }
 }
 </script>
@@ -26,3 +33,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+
