@@ -25,8 +25,7 @@ body {
     top: 0;
     position: fixed;
     width: 100%;
-    background: azure;
-    color: red;
+    // background-color: blueviolet;
 }
 
 .navbar-nav {
@@ -35,4 +34,13 @@ body {
 
 .my-widget {
   color: var(--danger);
+}
+
+#signUpForm {
+  width: 50%;
+  margin: 10px 10px 10px 10px;
+}
+
+.button {
+  color:white;
 }

@@ -4,11 +4,13 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/scss/custom.scss'
+import vuetify from './plugins/vuetify';
 
 Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')

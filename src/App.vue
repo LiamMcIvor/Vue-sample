@@ -1,36 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Navigation/>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <VehicleCard/>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <Navigation color="primary"/>
+      </div>
 
-  </div>
+      <v-spacer></v-spacer>
+
+      <!-- <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn> -->
+    </v-app-bar>
+
+    <v-content>
+      <SignUp/>
+      <VehicleCard/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import Navigation from './components/Navigation.vue'
-import VehicleCard from './components/VehicleCard.vue'
+// import HelloWorld from './components/HelloWorld';
+import Navigation from './components/Navigation';
+import VehicleCard from './components/VehicleCard';
+import SignUp from './components/SignUp';
 
 export default {
-  name: 'app',
+  name: 'App',
+
   components: {
-    HelloWorld,
     Navigation,
-    VehicleCard
-  }
-}
+    VehicleCard, 
+    SignUp
+  },
+
+  data: () => ({
+    //
+  }),
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
-

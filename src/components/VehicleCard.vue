@@ -13,12 +13,14 @@
     <b-card-text>
       Content of vehicle
     </b-card-text>
-
+    <v-text-field>textfield</v-text-field>
     <b-button href="#" variant="primary">Go somewhere</b-button>
   </b-card>
 </div>
 
+
 </template>
+
 
 <script>
 export default {
