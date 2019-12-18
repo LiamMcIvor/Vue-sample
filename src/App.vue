@@ -1,5 +1,7 @@
 <template>
+  
   <v-app>
+    <router-view></router-view>
     <v-app-bar
       app
       color="primary"
@@ -22,8 +24,8 @@
     </v-app-bar>
 
     <v-content>
-      <SignUp/>
-      <VehicleCard/>
+      <!-- <SignUp/> -->
+      <!-- <VehicleCard/> -->
     </v-content>
   </v-app>
 </template>
@@ -31,16 +33,16 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 import Navigation from './components/Navigation';
-import VehicleCard from './components/VehicleCard';
-import SignUp from './components/SignUp';
+// import VehicleCard from '/components/VehicleCard';
+// import SignUp from './components/SignUp';
 
 export default {
   name: 'App',
 
   components: {
     Navigation,
-    VehicleCard, 
-    SignUp
+    // VehicleCard, 
+    // SignUp
   },
 
   data: () => ({

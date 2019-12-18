@@ -1,6 +1,6 @@
 <template>
     
-<div>
+<div id="vehicleCard">
   <b-card
     title="Vehicle Details"
     img-src="https://storage.kawasaki.eu/public/kawasaki.eu/en-EU/model/19ZX1000Y_201GY3DRS1CG_A.png"
@@ -24,6 +24,6 @@
 
 <script>
 export default {
-    name: 'VehcileCard'
+    name: 'VehcileCard',
 }
 </script>

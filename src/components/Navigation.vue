@@ -1,15 +1,20 @@
+
 <template>
 
 <div>
   <b-navbar toggleable="lg">
-    <b-navbar-brand href="#">Home</b-navbar-brand>
+    <b-navbar-brand :to="{ path: '/' }">Home</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="#">Home</b-nav-item>
-        <b-nav-item href="#">Vehicles</b-nav-item>
+        <!-- <b-nav-item :to="{ path: '/' }">Home</b-nav-item> -->
+        <b-nav-item :to="{ path: 'signUp' }">Sign Up</b-nav-item>
+        <!-- :to="{name: 'VehicleCard'}" -->
+        <b-nav-item :to="{ path: 'VehicleCard' }">Vehicles</b-nav-item>
+        <b-nav-item :to="{ path: 'issues' }">Issues</b-nav-item>
+        <!-- <b-nav-item :to="{name: 'VehicleCard'}">Vehicles</b-nav-item> -->
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -34,7 +39,10 @@
 </template>
 
 <script>
+// import router from '../router';
+
 export default {
-    name: 'Navigation'
+    name: 'Navigation',
 }
+
 </script>

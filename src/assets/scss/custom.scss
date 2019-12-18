@@ -38,7 +38,18 @@ body {
 
 #signUpForm {
   width: 50%;
-  margin: 10px 10px 10px 10px;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  margin: 100px 10px 10px 100px;
+}
+
+#home {
+  padding-top: 500px;
+}
+
+#vehicleCard {
+  margin: 100px;
 }
 
 .button {
