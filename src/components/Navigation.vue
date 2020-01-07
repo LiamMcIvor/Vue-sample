@@ -13,7 +13,7 @@
         <b-nav-item :to="{ path: 'signUp' }">Sign Up</b-nav-item>
         <!-- :to="{name: 'VehicleCard'}" -->
         <b-nav-item :to="{ path: 'VehicleCard' }">Vehicles</b-nav-item>
-        <b-nav-item :to="{ path: 'issues' }">Issues</b-nav-item>
+        <b-nav-item :to="{ path: 'Issue' }">Issues</b-nav-item>
         <!-- <b-nav-item :to="{name: 'VehicleCard'}">Vehicles</b-nav-item> -->
       </b-navbar-nav>
 

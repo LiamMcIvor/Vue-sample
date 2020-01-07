@@ -9,6 +9,7 @@ import VueRouter from 'vue-router';
 import VehicleCard from './components/VehicleCard';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
+import Issue from './components/Issue';
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter)
@@ -19,7 +20,8 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Home },
     { path: '/vehicleCard', component: VehicleCard },
-    { path: '/signUp', component: SignUp }
+    { path: '/signUp', component: SignUp },
+    { path: '/issue', component: Issue}
     // { path: '/about', component: About }
   ]
 })

@@ -1,19 +1,13 @@
 <template>
     
-<div id="issues">
-  <b-card
-    title="Vehicle Issues"
-    img-top
-    tag="article"
-    style="max-width: 20rem;"
-    class="mb-2"
-  >
-    <b-card-text>
-      Content of vehicle
-    </b-card-text>
-    <v-text-field>textfield</v-text-field>
-    <b-button href="#" variant="primary">Go somewhere</b-button>
-  </b-card>
+<div id="vehicleCard">
+  <b-table striped hover :items="items" :fields="fields" >
+    <template v-slot:cell(is_addressed)="row">
+        <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+          Issue Addressed
+        </b-form-checkbox>
+      </template>
+      </b-table>
 </div>
 
 
@@ -23,5 +17,17 @@
 <script>
 export default {
     name: 'Issue',
+    data() {
+      return {
+        fields: ['issue_name', 'last_addressed', 'address_by', 'is_addressed'],
+        items: [
+          {
+            issue_name: null,
+            last_addressed: null,
+            address_by: null
+          }
+        ]
+      }
+    }
 }
 </script>
