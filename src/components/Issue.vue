@@ -1,6 +1,6 @@
 <template>
     
-<div id="issues">
+<div id="vehicleCard">
   <b-card
     title="Vehicle Issues"
     img-top
@@ -12,6 +12,7 @@
       Content of vehicle
     </b-card-text>
     <v-text-field>textfield</v-text-field>
+    <v-text-field>textfield</v-text-field>
     <b-button href="#" variant="primary">Go somewhere</b-button>
   </b-card>
 </div>
@@ -21,7 +22,21 @@
 
 
 <script>
+import axios from 'axios';
+const url = "http://localhost:8081/issue"
+
+
 export default {
     name: 'Issue',
+     mounted() {
+          axios.get(url).then(response => {
+            this.results = response.data
+            // eslint-disable-next-line no-console
+            console.log(response.data)
+          })
+          // eslint-disable-next-line no-console
+          console.log(1)
+        }
+        
 }
 </script>

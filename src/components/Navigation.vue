@@ -11,9 +11,10 @@
       <b-navbar-nav>
         <!-- <b-nav-item :to="{ path: '/' }">Home</b-nav-item> -->
         <b-nav-item :to="{ path: 'signUp' }">Sign Up</b-nav-item>
+        <b-nav-item :to="{ path: 'register' }">Register</b-nav-item>
         <!-- :to="{name: 'VehicleCard'}" -->
         <b-nav-item :to="{ path: 'VehicleCard' }">Vehicles</b-nav-item>
-        <b-nav-item :to="{ path: 'issues' }">Issues</b-nav-item>
+        <b-nav-item :to="{ path: 'issue' }">Issues</b-nav-item>
         <!-- <b-nav-item :to="{name: 'VehicleCard'}">Vehicles</b-nav-item> -->
       </b-navbar-nav>
 
