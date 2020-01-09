@@ -2,8 +2,10 @@ import Vue from 'vue';
 import Router from 'router';
 import VehicleCard from '@/components/VehicleCard';
 import Home from '@/components/Home';
-import RegisterWizard from '@/components/RegisterWizard';
+import Register from '@/components/Register';
 import Issue from '@/components/Issue';
+import AddVehicle from '@/components/AddVehicle';
+import AddIssue from '@/components/AddIssue';
 
 Vue.use(Router);
 
@@ -23,12 +25,22 @@ export default new Router({
         {
             path: '/register',
             name: 'Register',
-            component: RegisterWizard
+            component: Register
         },
         {
             path: '/issue',
             name: 'Issue',
             component: Issue
+        },
+        {
+            path: '/addVehicle',
+            name: 'AddVehicle',
+            component: AddVehicle
+        },
+        {
+            path: '/addIssue',
+            name: 'AddIssue',
+            component: AddIssue
         }
     ]
 });

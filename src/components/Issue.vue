@@ -1,22 +1,15 @@
+ 
 <template>
     
 <div id="vehicleCard">
-  <b-card
-    title="Vehicle Issues"
-    img-top
-    tag="article"
-    style="max-width: 20rem;"
-    class="mb-2"
-  >
-    <b-card-text>
-      Content of vehicle
-    </b-card-text>
-    <v-text-field>textfield</v-text-field>
-    <v-text-field>textfield</v-text-field>
-    <b-button href="#" variant="primary">Go somewhere</b-button>
-  </b-card>
+  <b-table striped hover :items="items" :fields="fields" >
+    <template v-slot:cell(is_addressed)="row">
+        <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+          Issue Addressed
+        </b-form-checkbox>
+      </template>
+      </b-table>
 </div>
-
 
 </template>
 
@@ -25,18 +18,28 @@
 import axios from 'axios';
 const url = "http://localhost:8081/issue"
 
-
 export default {
     name: 'Issue',
+    data() {
+      return {
+        results: null,
+        fields: ['issueName', 'lastAddressed', 'urgency', 'is_addressed', 'addressBy'],
+        items: [
+          {
+            issueName: null,
+            lastAdressed: null,
+            urgency: null
+          }
+        ]
+      }
+    },
      mounted() {
           axios.get(url).then(response => {
-            this.results = response.data
+            this.items = response.data
             // eslint-disable-next-line no-console
-            console.log(response.data)
+            console.log(response)
+            // console.log(this.items.issue_name)
           })
-          // eslint-disable-next-line no-console
-          console.log(1)
-        }
-        
+    }
 }
 </script>

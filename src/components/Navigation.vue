@@ -14,7 +14,9 @@
         <b-nav-item :to="{ path: 'register' }">Register</b-nav-item>
         <!-- :to="{name: 'VehicleCard'}" -->
         <b-nav-item :to="{ path: 'VehicleCard' }">Vehicles</b-nav-item>
+        <b-nav-item :to="{ path: 'addVehicle' }">Add Vehicle</b-nav-item>
         <b-nav-item :to="{ path: 'issue' }">Issues</b-nav-item>
+        <b-nav-item :to="{ path: 'addIssue' }">Add Issue</b-nav-item>
         <!-- <b-nav-item :to="{name: 'VehicleCard'}">Vehicles</b-nav-item> -->
       </b-navbar-nav>
 

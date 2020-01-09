@@ -37,7 +37,7 @@ const url = "http://localhost:8081/vehicle"
 
 export default {
     e1: '#vdetails',
-    name: 'VehcileCard',
+    name: 'VehicleCard',
     data () {
     return {
       results: null

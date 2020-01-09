@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="vehicleCard">
     <!-- <FormPlanPicker v-if="currentStepNumber === 1"/>
     <FormUserDetails v-if="currentStepNumber === 2"/>
     <FormAddress v-if="currentStepNumber === 3"/> -->

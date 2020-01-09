@@ -9,9 +9,11 @@ import VueRouter from 'vue-router';
 import VehicleCard from './components/VehicleCard';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
-import RegisterWizard from './components/RegisterWizard';
+import Register from './components/Register';
 import Issue from './components/Issue';
 import vuelidate from 'vuelidate';
+import AddVehicle from './components/AddVehicle';
+import AddIssue from './components/AddIssue';
 
 Vue.use(vuelidate);
 Vue.use(BootstrapVue);
@@ -24,8 +26,10 @@ const router = new VueRouter({
     { path: '/', component: Home },
     { path: '/vehicleCard', component: VehicleCard },
     { path: '/signUp', component: SignUp },
-    { path: '/register', component: RegisterWizard },
-    { path: '/issue', component: Issue }
+    { path: '/register', component: Register },
+    { path: '/issue', component: Issue },
+    { path: '/addVehicle', component: AddVehicle },
+    { path: '/addIssue', component: AddIssue }
     // { path: '/about', component: About }
   ]
 })
