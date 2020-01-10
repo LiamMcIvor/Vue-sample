@@ -55,3 +55,14 @@ body {
 .button {
   color:white;
 }
+
+.file-upload-form, .image-preview {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  padding: 20px;
+}
+img.preview {
+  width: 200px;
+  background-color: white;
+  border: 1px solid #DDD;
+  padding: 5px;
+}

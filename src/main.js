@@ -14,6 +14,8 @@ import Issue from './components/Issue';
 import vuelidate from 'vuelidate';
 import AddVehicle from './components/AddVehicle';
 import AddIssue from './components/AddIssue';
+import EditIssue from './components/EditIssue';
+import EditVehicle from './components/EditVehicle';
 
 Vue.use(vuelidate);
 Vue.use(BootstrapVue);
@@ -29,7 +31,9 @@ const router = new VueRouter({
     { path: '/register', component: Register },
     { path: '/issue', component: Issue },
     { path: '/addVehicle', component: AddVehicle },
-    { path: '/addIssue', component: AddIssue }
+    { path: '/addIssue', component: AddIssue },
+    { path: '/editIssue', component: EditIssue },
+    { path: '/editvehicle', component: EditVehicle },
     // { path: '/about', component: About }
   ]
 })

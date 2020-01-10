@@ -2,20 +2,23 @@
     <div id="vehicleCard">
           <h1 class="title">Add a Vehicle</h1>
             <form class="form">
-
+            <div 
+                v-for="vehicle in results"
+                :key="vehicle"
+            >
             <div class="form-group">
                 <label class="form-label" for="make">Make</label>
-                <input v-model="$v.form.make.$model" type="text" placeholder="make" class="form-control" id="make">
+                <input v-model="$v.form.make.$model" type="text" :placeholder="vehicle.make" class="form-control" id="make">
                 <!-- <div v-if="$v.form.name.$error" class="error">first name is required</div> -->
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="model">Model</label>
-                <input v-model="$v.form.model.$model" type="text" placeholder="model" class="form-control" id="model">
+                <input v-model="$v.form.model.$model" type="text" :placeholder="vehicle.model" class="form-control" id="model">
                 <!-- <div v-if="$v.form.name.$error" class="error">first name is required</div> -->
             </div>
-
-             <v-menu
+            <!-- </div> -->
+            <v-menu
                  ref="menu1"
                  v-model="menu1"
                  :close-on-content-click="false"
@@ -26,17 +29,17 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="form.taxDate"
+              v-model="vehicle.taxDate"
               label="Tax Renewal Date"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="form.taxDate" no-title scrollable>
+          <v-date-picker v-model="vehicle.taxDate" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu1 = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu1.save(form.taxDate)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu1[0].save(vehicle.taxDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
 
@@ -51,17 +54,17 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="form.insuranceDate"
+              v-model="vehicle.insuranceDate"
               label="Insurance Renewal Date"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="form.insuranceDate" no-title scrollable>
+          <v-date-picker v-model="vehicle.insuranceDate" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu.save(form.insuranceDate)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu[0].save(vehicle.insuranceDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
 
@@ -76,17 +79,17 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="form.motDate"
+              v-model="vehicle.motDate"
               label="MOT Renewal Date"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="form.motDate" no-title scrollable>
+          <v-date-picker v-model="vehicle.motDate" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu2 = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu2.save(form.motDate)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu2[0].save(vehicle.motDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
 
@@ -97,12 +100,13 @@
             <div class="image-preview" v-if="imageData.length > 0">
                 <img class="preview" :src="imageData">
             </div>
+            </div>
             </form> 
 
             <button
-        @click="postPost()"
-        class="btn"
-      >submit</button>
+               @click="postPost()"
+               class="btn"
+            >submit</button>
       
     </div>
 </template>
@@ -114,9 +118,10 @@
  const url = "http://localhost:8081/vehicle";
 
 export default {
-    name: 'AddVehicle',
+    name: 'EditVehicle',
     data() {
         return {
+            results: null,
             form: {
                 make: null,
                 model: null,
@@ -129,6 +134,13 @@ export default {
                 menu2: false,
                 imageData: ""
         }
+    },
+    mounted() {
+          axios.get(url).then(response => {
+            this.results = response.data
+            // eslint-disable-next-line no-console
+            console.log(response.data)
+          })
     },
     validations: {
       form: {

@@ -15,8 +15,11 @@
     class="mb-2"
   >
   <div id="vdetails">
-  {{ vehicle.make }}
-  {{ vehicle.model }}
+    <ul> Make: {{ vehicle.make }} </ul>
+    <ul> Model: {{ vehicle.model }} </ul>
+    <ul> Tax Renewal Date: {{ vehicle.taxDate }} </ul>
+    <ul> Insurance Renewaql Date: {{ vehicle.insuranceDate }} </ul>
+    <ul> MOT Renewal Date: {{ vehicle.motDate }} </ul>
 </div>
     <b-card-text>
       Content of vehicle

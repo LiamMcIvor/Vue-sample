@@ -6,6 +6,8 @@ import Register from '@/components/Register';
 import Issue from '@/components/Issue';
 import AddVehicle from '@/components/AddVehicle';
 import AddIssue from '@/components/AddIssue';
+import EditIssue from '@/components/EditIssue';
+import EditVehicle from '@/components/EditVehicle';
 
 Vue.use(Router);
 
@@ -41,6 +43,16 @@ export default new Router({
             path: '/addIssue',
             name: 'AddIssue',
             component: AddIssue
+        },
+        {
+            path: '/editIssue',
+            name: 'EditIssue',
+            component: EditIssue
+        },
+        {
+            path: 'editVehicle',
+            name: 'EditVehicle',
+            component: EditVehicle
         }
     ]
 });
