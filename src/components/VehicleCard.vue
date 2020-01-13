@@ -25,7 +25,8 @@
       Content of vehicle
     </b-card-text>
     <v-text-field>textfield</v-text-field>
-    <b-button href="#" variant="primary">Go somewhere</b-button>
+    <b-button :to="{ path: 'issue' }" variant="primary">View Issues</b-button>
+    <b-button :to="{ path: 'editVehicle' }" variant="primary">Edit Vehicle</b-button>
   </b-card>
   </div>
 </div>

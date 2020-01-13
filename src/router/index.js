@@ -8,6 +8,7 @@ import AddVehicle from '@/components/AddVehicle';
 import AddIssue from '@/components/AddIssue';
 import EditIssue from '@/components/EditIssue';
 import EditVehicle from '@/components/EditVehicle';
+import Login from '@/components/Login';
 
 Vue.use(Router);
 
@@ -50,9 +51,14 @@ export default new Router({
             component: EditIssue
         },
         {
-            path: 'editVehicle',
+            path: '/editVehicle',
             name: 'EditVehicle',
             component: EditVehicle
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
         }
     ]
 });

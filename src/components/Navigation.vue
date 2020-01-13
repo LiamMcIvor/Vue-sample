@@ -19,7 +19,8 @@
         <b-nav-item :to="{ path: 'addIssue' }">Add Issue</b-nav-item>
         <b-nav-item :to="{ path: 'editIssue' }">Edit Issue</b-nav-item>
         <b-nav-item :to="{ path: 'editVehicle' }">Edit Vehicle</b-nav-item>
-        <!-- <b-nav-item :to="{name: 'VehicleCard'}">Vehicles</b-nav-item> -->
+        <!-- <b-nav-item v-if="authenticated" :to="{ path: 'login' }" v-on:click.native="logout()" replace>Logout</b-nav-item>
+        <router-view @authenticated="setAuthenticated" /> -->
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -48,6 +49,28 @@
 
 export default {
     name: 'Navigation',
+    data() {
+            return {
+                authenticated: true,
+                mockAccount: {
+                    username: "nraboy",
+                    password: "password"
+                }
+            }
+        },
+      mounted() {
+            if(!this.authenticated) {
+                this.$router.replace({ name: "login" });
+            }
+        },
+        methods: {
+            setAuthenticated(status) {
+                this.authenticated = status;
+            },
+            logout() {
+                this.authenticated = false;
+            }
+        },
 }
 
 </script>

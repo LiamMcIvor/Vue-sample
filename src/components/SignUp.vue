@@ -10,33 +10,16 @@
          :rules="[rules.required]"
         ></v-text-field>
         <v-text-field
-         v-model="placeholder" label="Street Name"
-         :rules="[rules.required]"
-        ></v-text-field>
-        <v-text-field
-         v-model="placeholder" label="House Number"
-         :rules="[rules.required]"
-         :type="'number'"
-        ></v-text-field>
-        <v-text-field
          v-model="placeholder" label="Postcode"
-         :rules="[rules.required, rules.pattern]"
-        ></v-text-field>
-        <v-text-field
-         v-model="placeholder" label="City"
          :rules="[rules.required]"
-        ></v-text-field>
-        <v-text-field 
-          v-model="placeholder" label="Country"
-          :rules="[rules.required]"
         ></v-text-field>
         <v-text-field 
           v-model="placeholder" label="E-mail Address"
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.email]"
         ></v-text-field>
         <v-text-field 
           v-model="placeholder" label="Confirm E-mail"
-          :rules="[rules.required]"  
+          :rules="[rules.required, rules.email]"  
         ></v-text-field>
         <v-text-field 
           v-model="password" label="Password"
@@ -46,27 +29,44 @@
           v-model="placeholder" label="Confirm Password"
           :rules="[rules.required, rules.min]"
         ></v-text-field>
-        <b-button href="#" variant="outline-primary">Submit</b-button>
+        <b-button 
+          href="#" 
+          variant="outline-primary"
+          @click="postPost()"
+          class="btn"
+        >Submit</b-button>
     </div>
     
 </template>
 
 <script>
+import axios from 'axios';
+const url = "http://localhost:8181/user";
+
 export default {
     data () {
       return {
-        // pattern: {
-        //   pattern: '/^[a-z]{2}\d{1,2}\s*\d[a-z]{2}$/i'
-        // },
         rules:  {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters', 
           message:'One lowercase letter required.',
-          // pattern:"/^[a-z]{2}\d{1,2}\s*\d[a-z]{2}$/i"
+          email: v => /.+@.+/.test(v) || "E-mail must be valid"
         }
       }
     },
-    name: 'SignUp'
+    name: 'SignUp',
+    methods: {
+        postPost() {
+          axios.post(url, this.form)
+          .then(response => {
+            // eslint-disable-next-line no-console
+            console.log(response)
+          })
+          .catch(e => {
+          this.errors.push(e)
+          })
+        }
+      }
 }
 
 </script>

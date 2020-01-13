@@ -16,6 +16,7 @@ import AddVehicle from './components/AddVehicle';
 import AddIssue from './components/AddIssue';
 import EditIssue from './components/EditIssue';
 import EditVehicle from './components/EditVehicle';
+import Login from './components/Login';
 
 Vue.use(vuelidate);
 Vue.use(BootstrapVue);
@@ -24,6 +25,7 @@ Vue.use(VueRouter);
 Vue.config.productionTip = false
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/', component: Home },
     { path: '/vehicleCard', component: VehicleCard },
@@ -34,6 +36,7 @@ const router = new VueRouter({
     { path: '/addIssue', component: AddIssue },
     { path: '/editIssue', component: EditIssue },
     { path: '/editvehicle', component: EditVehicle },
+    { path: '/login', component: Login },
     // { path: '/about', component: About }
   ]
 })

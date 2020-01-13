@@ -9,6 +9,7 @@
         </b-form-checkbox>
       </template>
       </b-table>
+      <b-button :to="{ path: 'addIssue' }" variant="primary">Add Issue</b-button>
 </div>
 
 </template>
