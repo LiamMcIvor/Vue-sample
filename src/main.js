@@ -17,10 +17,12 @@ import AddIssue from './components/AddIssue';
 import EditIssue from './components/EditIssue';
 import EditVehicle from './components/EditVehicle';
 import Login from './components/Login';
+// import { EventBus } from "./event-bus.js";  
 
 Vue.use(vuelidate);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
+// Vue.use(EventBus);
 
 Vue.config.productionTip = false
 

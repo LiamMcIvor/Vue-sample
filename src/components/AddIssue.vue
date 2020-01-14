@@ -48,6 +48,7 @@
 </template>
 
 <script>
+// import { EventBus } from "../eventBus/event-bus.js";  
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
  const url = "http://localhost:8081/issue";
@@ -87,6 +88,12 @@ export default {
       }
      },
      methods: {
+      // setIssueId: function(issueId){
+      //   // eslint-disable-next-line no-console
+      //       console.log(issueId)
+      //       EventBus.$emit("clicked-event", issueId);
+      //   return issueId;
+      // },
         postPost() {
     axios.post(url, this.form)
     .then(response => {

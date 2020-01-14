@@ -15,7 +15,7 @@
     class="mb-2"
   >
   <div id="vdetails">
-    <ul> Make: {{ vehicle.make }} </ul>
+    <ul> Make: {{ vehicle.make  }} </ul>
     <ul> Model: {{ vehicle.model }} </ul>
     <ul> Tax Renewal Date: {{ vehicle.taxDate }} </ul>
     <ul> Insurance Renewaql Date: {{ vehicle.insuranceDate }} </ul>
@@ -26,7 +26,7 @@
     </b-card-text>
     <v-text-field>textfield</v-text-field>
     <b-button :to="{ path: 'issue' }" variant="primary">View Issues</b-button>
-    <b-button :to="{ path: 'editVehicle' }" variant="primary">Edit Vehicle</b-button>
+    <b-button @click="setVehicleId(vehicle.id)" :to="{ path: 'editVehicle'}" variant="primary">Edit Vehicle</b-button>
   </b-card>
   </div>
 </div>
@@ -36,12 +36,18 @@
 
 
 <script>
+import { EventBus } from "../eventBus/event-bus.js";  
 import axios from 'axios';
 const url = "http://localhost:8081/vehicle"
 
 export default {
     e1: '#vdetails',
     name: 'VehicleCard',
+    props: {
+      id: {
+        type: String
+      }
+    },
     data () {
     return {
       results: null
@@ -53,6 +59,14 @@ export default {
             // eslint-disable-next-line no-console
             console.log(response)
           })
+    },
+    methods: {
+      setVehicleId: function(vehicleId){
+        // eslint-disable-next-line no-console
+            console.log(vehicleId)
+            EventBus.$emit("clicked-event", vehicleId);
+        return vehicleId;
+      }
     }
 }
 </script>

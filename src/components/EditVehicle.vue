@@ -2,17 +2,24 @@
     <div id="vehicleCard">
           <h1 class="title">Edit Vehicle</h1>
             <form class="form" >
-            <div 
+            <!-- <div 
                 v-for="vehicle in results"
                 
                 :key="vehicle.id"
                 
-                >
-                <div  v-once>
-            <v-text-field
+                > -->
                 
+            <v-text-field
+                v-model="form.make"
                  label="Make"
-                :placeholder="vehicle.make"
+                :placeholder="results.make"
+                
+              ></v-text-field>
+
+              <v-text-field
+                v-model="form.model"
+                 label="Model"
+                :placeholder="results.model"
                 
               ></v-text-field>
             <!-- <div class="form-group">
@@ -21,13 +28,13 @@
                 <div v-if="$v.form.name.$error" class="error">first name is required</div> 
            </div> -->
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="form-label" for="model">Model</label>
-                <input v-model="$v.form.model.$model" type="text" :placeholder="vehicle.model" class="form-control" id="model">
-                <!-- <div v-if="$v.form.name.$error" class="error">first name is required</div> -->
-            </div>
+                <input v-model="$v.form.model.$model" type="text" :placeholder="results.model" class="form-control" id="model">
+                <div v-if="$v.form.name.$error" class="error">first name is required</div> 
+            </div> -->
             <!-- </div> -->
-            <v-menu
+             <v-menu
                  ref="menu1"
                  v-model="menu1"
                  :close-on-content-click="false"
@@ -38,17 +45,17 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="vehicle.taxDate"
+              v-model="form.taxDate"
               label="Tax Renewal Date"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="vehicle.taxDate" no-title scrollable>
+          <v-date-picker v-model="form.taxDate" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu1 = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu1[0].save(vehicle.taxDate)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu1.save(form.taxDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
 
@@ -63,17 +70,17 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="vehicle.insuranceDate"
+              v-model="form.insuranceDate"
               label="Insurance Renewal Date"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="vehicle.insuranceDate" no-title scrollable>
+          <v-date-picker v-model="form.insuranceDate" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu[0].save(vehicle.insuranceDate)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(form.insuranceDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
 
@@ -88,17 +95,17 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="vehicle.motDate"
+              v-model="form.motDate"
               label="MOT Renewal Date"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="vehicle.motDate" no-title scrollable>
+          <v-date-picker v-model="form.motDate" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu2 = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu2[0].save(vehicle.motDate)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu2.save(form.motDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
 
@@ -109,8 +116,8 @@
             <div class="image-preview" v-if="imageData.length > 0">
                 <img class="preview" :src="imageData">
             </div>
-                </div>
-            </div>
+                
+            <!-- </div> -->
             </form> 
 
             <button
@@ -125,15 +132,18 @@
 // import VCalendar from 'v-calendar';
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/getVehicle/1";
+//  import VehicleCard from './VehicleCard';
+ import { EventBus } from "../eventBus/event-bus.js"; 
+
+ const url = "http://localhost:8081/getVehicle/";
+ const updateUrl = "http://localhost:8081/updateVehicle/";
 
 export default {
     name: 'EditVehicle',
     data() {
         return {
           
-            results: Object,
-            thisVehicle: this.results,
+            results: null,
             form: {
                 id: null,
                 make: null,
@@ -152,12 +162,22 @@ export default {
     created() {
       // eslint-disable-next-line no-console
               // console.log(this.results)
-      this.getVehicle();
+              EventBus.$on("clicked-event", vehicleId=> {  
+    
+        console.log(url)
+        this.getVehicle(url + vehicleId);
+      });  
+       // eslint-disable-next-line no-console
+              // console.log(url + vehicleId)
+              
+      // this.getVehicle();
     },
-    // mounted() {
-    //   this.getVehicle();
-         
-    // },
+    mounted() {
+      // EventBus.$on("clicked-event", vehicleId=> {  
+      //   url + vehicleId;
+      // });  
+        //  this.getVehicle();
+    },
     validations: {
       form: {
         make: {
@@ -180,9 +200,7 @@ export default {
     
      methods: {
         postPost() {
-            // eslint-disable-next-line no-console
-            console.log(this.form.make)
-            axios.post(url, this.form)
+            axios.patch(updateUrl + this.results.id, this.form)
             .then(response => {
               // eslint-disable-next-line no-console
               console.log(response)
@@ -191,9 +209,11 @@ export default {
               this.errors.push(e)
             })
           },
-          getVehicle() {
+          getVehicle(url) {
+            // eslint-disable-next-line no-console
+            // console.log(this.form.id)
              axios.get(url).then(response => {
-            this.results = response
+            this.results = response.data
             // eslint-disable-next-line no-console
             console.log('123' + response)
           })
@@ -217,9 +237,9 @@ export default {
         }
         },
          computed: {
-       limitVehicles: function() {
+       id: function() {
        
-         return this.results[0]
+         return this.results.id
        }
   }    
 }
