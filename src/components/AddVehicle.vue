@@ -111,13 +111,14 @@
 // import VCalendar from 'v-calendar';
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/vehicle";
+ const url = "http://localhost:8081/update/1";
 
 export default {
     name: 'AddVehicle',
     data() {
         return {
             form: {
+                
                 make: null,
                 model: null,
                 motDate: new Date().toISOString().substr(0, 10),
@@ -152,8 +153,8 @@ export default {
      methods: {
         postPost() {
             // eslint-disable-next-line no-console
-            console.log(this.form.make)
-            axios.post(url, this.form)
+            console.log(this.form)
+            axios.patch(url, this.form)
             .then(response => {
               // eslint-disable-next-line no-console
               console.log(response)

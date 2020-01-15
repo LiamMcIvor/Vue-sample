@@ -51,7 +51,7 @@
 // import { EventBus } from "../eventBus/event-bus.js";  
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/issue";
+ const url = "http://localhost:8081/addIssue/1";
 
 export default {
     name: 'AddIssue',
@@ -95,7 +95,7 @@ export default {
       //   return issueId;
       // },
         postPost() {
-    axios.post(url, this.form)
+    axios.patch(url, this.form)
     .then(response => {
             // eslint-disable-next-line no-console
             console.log(response)

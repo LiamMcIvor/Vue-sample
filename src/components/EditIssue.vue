@@ -2,21 +2,34 @@
     <div id="vehicleCard">
         <h1 class="title">Edit Issue</h1>
             <form class="form">
-            <div 
+            <!-- <div 
     v-for="issue in results"
     :key="issue"
   >
             <div class="form-group">
                 <label class="form-label" for="name">Issue Name</label>
                 <input v-model="$v.form.issueName.$model" type="text" :placeholder="issue.issueName" class="form-control" id="name">
-                <!-- <div v-if="$v.form.name.$error" class="error">first name is required</div> -->
+                <div v-if="$v.form.name.$error" class="error">first name is required</div> 
             </div>
 
             
             <div class="form-group">
                 <b-form-select v-model="form.urgency" :options="options"></b-form-select>
-            </div>
+            </div> -->
 
+              <v-text-field
+                v-model="form.issueName"
+                 label="Issue Name"
+                :placeholder="results.issueName"
+                :rules="[rules.required]"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="form.urgency"
+                 label="Urgency"
+                :placeholder="results.urgency"
+                :rules="[rules.required]"
+              ></v-text-field>
             
              <v-menu
                  ref="menu"
@@ -29,20 +42,20 @@
              >
               <template v-slot:activator="{ on }">
               <v-text-field
-              v-model="issue.lastAddressed"
+              v-model="form.lastAddressed"
               label="Last Addressed"
               readonly
               v-on="on"
                  >
             </v-text-field>
           </template>
-          <v-date-picker v-model="issue.lastAddressed" no-title scrollable>
+          <v-date-picker v-model="form.lastAddressed" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu[0].save(issue.lastAddressed)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(form.lastAddressed)">OK</v-btn>
           </v-date-picker>
         </v-menu>
- </div>
+ <!-- </div> -->
             </form>
             
               <button
@@ -56,12 +69,20 @@
 <script>
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/issue";
+ import { EventBus } from "../eventBus/event-bus.js"; 
+const url = "http://localhost:8081/getIssue/";
+ const updateUrl = "http://localhost:8081/updateIssue/";
 
 export default {
     name: 'EditIssue',
     data() {
         return {
+          rules:  {
+          required: value => !!value || 'Required.',
+          min: v => v.length >= 8 || 'Min 8 characters', 
+          message:'One lowercase letter required.',
+          email: v => /.+@.+/.test(v) || "E-mail must be valid"
+        },
             results: null,
             form: {
                 issueName: null,
@@ -80,12 +101,18 @@ export default {
         ]
         }
     },
+    created() {
+      EventBus.$on("clicked-issue", issueId=> {  
+      console.log(issueId)
+      this.getIssue(url + issueId);
+      });
+    },
     mounted() {
-          axios.get(url).then(response => {
-            this.results = response.data
-            // eslint-disable-next-line no-console
-            console.log(response.data)
-          })
+          // axios.get(url).then(response => {
+          //   this.results = response.data
+          //   // eslint-disable-next-line no-console
+          //   console.log(response.data)
+          // })
     },
      validations: {
       form: {
@@ -102,16 +129,27 @@ export default {
      },
      methods: {
         postPost() {
-    axios.post(url, this.form)
-    .then(response => {
+          if(!this.rules.validate()){
+          axios.patch(updateUrl + this.results.id, this.form)
+          .then(response => {
             // eslint-disable-next-line no-console
             console.log(response)
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
-    }
-    } 
+           })
+          .catch(e => {
+          this.errors.push(e)
+          })
+          }
+        },
+        getIssue(url) {
+            // eslint-disable-next-line no-console
+            // console.log(this.form.id)
+             axios.get(url).then(response => {
+            this.results = response.data
+            // eslint-disable-next-line no-console
+            console.log('123' + response)
+          })
+        }
+      } 
 }
 </script>
 

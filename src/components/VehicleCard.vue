@@ -1,10 +1,11 @@
 <template>
     
-<div id="vehicleCard">
-  <div 
+<div id="vehicleCard" v-if="renderComponent">
+  <div id="vLoop"
     v-for="vehicle in results"
-    :key="vehicle"
+    :key="vehicle.id"
   >
+  <div id="vehicle">
   <b-card
     title="Vehicle Details"
     img-src="https://storage.kawasaki.eu/public/kawasaki.eu/en-EU/model/19ZX1000Y_201GY3DRS1CG_A.png"
@@ -27,7 +28,9 @@
     <v-text-field>textfield</v-text-field>
     <b-button :to="{ path: 'issue' }" variant="primary">View Issues</b-button>
     <b-button @click="setVehicleId(vehicle.id)" :to="{ path: 'editVehicle'}" variant="primary">Edit Vehicle</b-button>
+    <b-button @click="deleteVehicle(vehicle.id)" variant="primary">Delete Vehicle</b-button>
   </b-card>
+  </div>
   </div>
 </div>
 
@@ -38,7 +41,8 @@
 <script>
 import { EventBus } from "../eventBus/event-bus.js";  
 import axios from 'axios';
-const url = "http://localhost:8081/vehicle"
+const url = "http://localhost:8081/vehicle";
+const deleteUrl = "http://localhost:8081/vehicle/";
 
 export default {
     e1: '#vdetails',
@@ -49,7 +53,9 @@ export default {
       }
     },
     data () {
+      
     return {
+      renderComponent: true,
       results: null
     }
   },
@@ -66,7 +72,45 @@ export default {
             console.log(vehicleId)
             EventBus.$emit("clicked-event", vehicleId);
         return vehicleId;
-      }
+      },
+      forceRerender: function() {
+        // Remove my-component from the DOM
+        this.renderComponent = false;
+        
+        this.$nextTick(() => {
+          // Add the component back in
+          this.renderComponent = true;
+        });
+      },
+      getVehicles: function() {
+        axios.get(url).then(response => {
+            this.results = response.data
+            // eslint-disable-next-line no-console
+            console.log(response)
+          })
+      },
+      deleteVehicle: function(vehicleId) {
+        axios.delete(deleteUrl + vehicleId).then(response => {
+            this.results = response.data
+           this.getVehicles();
+            // this.mounted;
+            // this.results.$forceUpdate
+            // let vehicleDiv = document.getElementById("vLoop");
+            // vehicleDiv.parentNode.removeChild(vehicleDiv);  
+            // eslint-disable-next-line no-console
+            console.log(response)
+            // this.$forceUpdate();
+
+          })
+      },
+      // getVehicles: function() {
+      //   axios.get(url).then(response => {
+      //       this.results = response.data
+      //       // eslint-disable-next-line no-console
+      //       console.log(response)
+      //     })
+      // }
+      
     }
 }
 </script>
