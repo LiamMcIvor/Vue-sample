@@ -24,12 +24,15 @@
                 :rules="[rules.required]"
               ></v-text-field>
 
-              <v-text-field
+              <div class="form-group">
+                <b-form-select v-model="form.urgency" :options="options"></b-form-select>
+            </div>
+              <!-- <v-text-field
                 v-model="form.urgency"
                  label="Urgency"
                 :placeholder="results.urgency"
                 :rules="[rules.required]"
-              ></v-text-field>
+              ></v-text-field> -->
             
              <v-menu
                  ref="menu"
@@ -91,7 +94,7 @@ export default {
             },
              menu: false,
              options: [
-          { value: null, text: 'Please select an option' },
+          { value: null, text: 'Please select an option '  },
           { value: '1', text: 'Daily' },
           { value: '7', text: 'Weekly' },
           { value: '14', text: 'Bi-Weekly' },

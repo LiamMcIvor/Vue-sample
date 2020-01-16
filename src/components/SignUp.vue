@@ -1,38 +1,42 @@
 <template>
-    <div id="signUpForm">
+    <div id="signUpForm" >
+        <v-form v-model="isValid">
         <v-text-field
-         v-model="name" label="First Name"
+         v-model="form.firstName" label="First Name"
          :rules="[rules.required]"
+         @change='checkEmpty($event, "name")'
          :type="'String'"
         ></v-text-field>
         <v-text-field
-         v-model="placeholder" label="Surname"
+         v-model="form.surname" label="Surname"
          :rules="[rules.required]"
         ></v-text-field>
         <v-text-field
-         v-model="placeholder" label="Postcode"
+         v-model="form.postcode" label="Postcode"
          :rules="[rules.required]"
         ></v-text-field>
         <v-text-field 
-          v-model="placeholder" label="E-mail Address"
+          v-model="form.email" label="E-mail Address"
           :rules="[rules.required, rules.email]"
         ></v-text-field>
         <v-text-field 
-          v-model="placeholder" label="Confirm E-mail"
-          :rules="[rules.required, rules.email]"  
+          v-model="form.cEmail" label="Confirm E-mail"
+          :rules="[rules.required, rules.email, emailConfirmationRule]"  
         ></v-text-field>
         <v-text-field 
-          v-model="password" label="Password"
+          v-model="form.password" label="Password"
           :rules="[rules.required, rules.min]"
         ></v-text-field>
         <v-text-field 
-          v-model="placeholder" label="Confirm Password"
-          :rules="[rules.required, rules.min]"
+          v-model="form.cPassword" label="Confirm Password"
+          :rules="[rules.required, rules.min, passwordConfirmationRule]"
         ></v-text-field>
+        </v-form>
         <b-button 
           href="#" 
           variant="outline-primary"
           @click="postPost()"
+          :disabled="!isValid"
           class="btn"
         >Submit</b-button>
     </div>
@@ -46,11 +50,23 @@ const url = "http://localhost:8081/user";
 export default {
     data () {
       return {
+        isValid: true,
+        form: {
+          email: null,
+          cEmail: null,
+          password: null,
+          cPassword: null,
+          firstName: null,
+          surname: null,
+          postcode: null
+        },
         rules:  {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters', 
-          message:'One lowercase letter required.',
-          email: v => /.+@.+/.test(v) || "E-mail must be valid"
+          email: v => /.+@.+/.test(v) || "E-mail must be valid",
+          uppercase: v => /(?=.*[A-Z])/.test(v) || 'Must have one uppercase character', 
+          oneNumber: v => /(?=.*\d)/.test(v) || 'Must have one number', 
+          special: v => /([!@$%])/.test(v) || 'Must have one special character [!@#$%]'
         }
       }
     },
@@ -66,7 +82,15 @@ export default {
           this.errors.push(e)
           })
         }
-      }
+      },
+      computed: {
+    passwordConfirmationRule() {
+      return this.form.password === this.form.cPassword || 'Passwords must match'
+    },
+    emailConfirmationRule() {
+      return this.form.email === this.form.cEmail || 'Emails must match'
+    },
+}
 }
 
 </script>
