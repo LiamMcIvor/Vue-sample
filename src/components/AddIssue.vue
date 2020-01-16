@@ -51,7 +51,7 @@
 // import { EventBus } from "../eventBus/event-bus.js";  
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/addIssue/1";
+ const url = "http://localhost:8081/addIssue";
 
 export default {
     name: 'AddIssue',

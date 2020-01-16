@@ -7,7 +7,7 @@ import './assets/scss/custom.scss'
 import vuetify from './plugins/vuetify';
 import VueRouter from 'vue-router';
 import VehicleCard from './components/VehicleCard';
-import Home from './components/Home';
+// import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Register from './components/Register';
 import Issue from './components/Issue';
@@ -18,6 +18,7 @@ import EditIssue from './components/EditIssue';
 import EditVehicle from './components/EditVehicle';
 import Login from './components/Login';
 // import { EventBus } from "./event-bus.js";  
+import axios from './backend/vue-axios';
 
 Vue.use(vuelidate);
 Vue.use(BootstrapVue);
@@ -29,7 +30,7 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Home },
+    // { path: '/', component: Home },
     { path: '/vehicleCard', component: VehicleCard },
     { path: '/signUp', component: SignUp },
     { path: '/register', component: Register },
@@ -38,13 +39,15 @@ const router = new VueRouter({
     { path: '/addIssue', component: AddIssue },
     { path: '/editIssue', component: EditIssue },
     { path: '/editvehicle', component: EditVehicle },
-    { path: '/login', component: Login },
+    { path: '/', component: Login },
     // { path: '/about', component: About }
   ]
 })
 
+/* eslint-disable no-new */
 new Vue({
   vuetify,
   router,
+  axios,
   render: h => h(App)
 }).$mount('#app')

@@ -9,10 +9,10 @@
     >
       <div class="d-flex align-center">
         <Navigation color="primary"/>
-      </div>
+       </div>
 
       <v-spacer></v-spacer>
-
+      
       <!-- <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"

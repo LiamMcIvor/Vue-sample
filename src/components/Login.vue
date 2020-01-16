@@ -1,47 +1,120 @@
 <template>
-    <div id="login">
-        <h1>Login</h1>
-        <input type="text" name="username" v-model="input.username" placeholder="Username" />
-        <input type="password" name="password" v-model="input.password" placeholder="Password" />
-        <button type="button" v-on:click="login()">Login</button>
-    </div>
+  <div class="login-wrapper border border-light">
+    <form class="form-signin" @submit.prevent="login">
+      <h2 class="form-signin-heading">Please sign in</h2>
+      <div class="alert alert-danger" v-if="error">{{ error }}</div>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" @click="setUserId(this.id)">Sign in</button>
+    </form>
+  </div>
 </template>
 
 <script>
+import { EventBus } from "../eventBus/event-bus.js";  
 export default {
-    name: 'Login',
-    data() {
-            return {
-                input: {
-                    username: "",
-                    password: ""
+    
+  name: 'Login',
+  data () {
+    return {
+        id: '',
+      email: '',
+      password: '',
+      error: false
+    }
+  },
+  methods: {
+    login () {
+        this.axios.get('/user')
+        .then(response => {
+            console.log(response)
+            response.data.forEach(user => {
+                if (user.email === this.email && user.password === this.password){
+                    this.id = user.id
+                    console.log(this.id)
+                    this.loginSuccessful(this.id)
+                    this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+                    this.setUserId(this.id)
                 }
-            }
+                else {
+                    this.loginFailed()
+                }
+            })
+        })
+        // .then(response => this.loginSuccessful(response))
+        // .catch(() => this.loginFailed())
+         console.log(this.email)
+         console.log(this.password)
+    },
+    loginSuccessful () {
+        console.log('login')
+        // if (!req.data.token) {
+        //     this.loginFailed()
+        //     return
+        // }
+
+        // localStorage.token = req.data.token
+        // this.error = false
+
+        // this.$router.replace(this.$route.query.redirect || '/issue')
+        EventBus.$emit("loggedIn", this.id);
         },
-        methods: {
-            login() {
-                if(this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
-                        this.$emit("authenticated", true);
-                        this.$router.replace({ name: "secure" });
-                    } else {
-                        console.log("The username and / or password is incorrect");
-                    }
-                } else {
-                    console.log("A username and password must be present");
-                }
-            }
+        loginFailed () {
+        this.error = 'Login failed!'
+        delete localStorage.token
+        },
+        setUserId: function(userId) {
+            console.log(userId + 'user')
+            EventBus.$emit("clicked-login", userId);
         }
+  }
 }
 </script>
 
-<style scoped>
-    #login {
-        width: 500px;
-        border: 1px solid #CCCCCC;
-        background-color: #FFFFFF;
-        margin: auto;
-        margin-top: 200px;
-        padding: 20px;
-    }
+<style lang="css">
+body {
+  background: #605B56;
+}
+
+.login-wrapper {
+  background: #fff;
+  width: 70%;
+  margin: 12% auto;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 10% 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 </style>

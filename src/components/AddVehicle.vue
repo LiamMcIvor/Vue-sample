@@ -150,6 +150,15 @@ export default {
         }
       }
      },
+     created() {
+      // eslint-disable-next-line no-console
+              // console.log(this.results)
+      //         EventBus.$on("clicked-event", vehicleId=> {  
+    
+      //   console.log(url)
+        
+      // });  
+     },
      methods: {
         postPost() {
             // eslint-disable-next-line no-console

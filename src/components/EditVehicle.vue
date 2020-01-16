@@ -13,14 +13,14 @@
                 v-model="form.make"
                  label="Make"
                 :placeholder="results.make"
-                
+                :rules="[rules.required, rules.min]"
               ></v-text-field>
 
               <v-text-field
                 v-model="form.model"
                  label="Model"
                 :placeholder="results.model"
-                
+                :rules="[rules.required, rules.min]"
               ></v-text-field>
             <!-- <div class="form-group">
                 <label class="form-label" for="make">Make</label>
@@ -49,6 +49,7 @@
               label="Tax Renewal Date"
               readonly
               v-on="on"
+              :rules="[rules.required]"
                  >
             </v-text-field>
           </template>
@@ -74,6 +75,7 @@
               label="Insurance Renewal Date"
               readonly
               v-on="on"
+              :rules="[rules.required]"
                  >
             </v-text-field>
           </template>
@@ -99,6 +101,7 @@
               label="MOT Renewal Date"
               readonly
               v-on="on"
+              :rules="[rules.required]"
                  >
             </v-text-field>
           </template>
@@ -156,6 +159,10 @@ export default {
                 menu1: false,
                 menu2: false,
                 imageData: "",
+                 rules:  {
+                  required: value => !!value || 'Required.',
+                  min: v => v.length >= 8 || 'Min 3 characters', 
+                 }
                 
         }
     },

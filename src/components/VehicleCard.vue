@@ -30,8 +30,10 @@
     <b-button @click="setVehicleId(vehicle.id)" :to="{ path: 'editVehicle'}" variant="primary">Edit Vehicle</b-button>
     <b-button @click="deleteVehicle(vehicle.id)" variant="primary">Delete Vehicle</b-button>
   </b-card>
+
   </div>
   </div>
+  <b-button @click="addVehicle(vehicle.id)" :to="{ path: 'addVehicle'}" variant="primary">Add Vehicle</b-button>
 </div>
 
 
@@ -41,7 +43,7 @@
 <script>
 import { EventBus } from "../eventBus/event-bus.js";  
 import axios from 'axios';
-const url = "http://localhost:8081/vehicle";
+const url = "http://localhost:8081/get/";
 const deleteUrl = "http://localhost:8081/vehicle/";
 
 export default {
@@ -59,9 +61,27 @@ export default {
       results: null
     }
   },
+  created() {
+      // eslint-disable-next-line no-console
+              // console.log(this.results)
+              EventBus.$on("clicked-login", userId=> {  
+    url + userId
+        console.log(url)
+        // console.log('1' + url)
+        // this.getVehicle(url + userId);
+      });  
+    },
     mounted() {
+      EventBus.$on("clicked-login", userId=> {  
+        
+        url + userId
+        console.log(url)
+      });  
           axios.get(url).then(response => {
-            this.results = response.data
+            // console.log(response)
+            console.log(response)
+            this.results = response.data.vehicles
+            // this.results = response.data[0].vehicles
             // eslint-disable-next-line no-console
             console.log(response)
           })
@@ -73,6 +93,9 @@ export default {
             EventBus.$emit("clicked-event", vehicleId);
         return vehicleId;
       },
+      // addVehicle: function(){
+      //   EventBus.$emit("clicked-add", userId);
+      // },
       forceRerender: function() {
         // Remove my-component from the DOM
         this.renderComponent = false;

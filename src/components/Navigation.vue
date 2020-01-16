@@ -29,7 +29,7 @@
           <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
         </b-nav-form> -->
-
+        <!-- auth added bellow -->
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>
@@ -53,8 +53,8 @@ export default {
             return {
                 authenticated: true,
                 mockAccount: {
-                    username: "nraboy",
-                    password: "password"
+                    username: "",
+                    password: ""
                 }
             }
         },
@@ -67,9 +67,10 @@ export default {
             setAuthenticated(status) {
                 this.authenticated = status;
             },
-            logout() {
-                this.authenticated = false;
-            }
+            // logout() {
+            //     this.authenticated = false;
+            // },
+
         },
 }
 
