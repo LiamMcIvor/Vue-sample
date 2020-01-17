@@ -167,17 +167,11 @@ export default {
         }
     },
     created() {
-      // eslint-disable-next-line no-console
-              // console.log(this.results)
-              EventBus.$on("clicked-event", vehicleId=> {  
-    
+        EventBus.$on("clicked-event", vehicleId=> {  
         console.log(url)
         this.getVehicle(url + vehicleId);
       });  
-       // eslint-disable-next-line no-console
-              // console.log(url + vehicleId)
-              
-      // this.getVehicle();
+
     },
     mounted() {
       // EventBus.$on("clicked-event", vehicleId=> {  

@@ -7,19 +7,21 @@
       <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" @click="setUserId(this.id)">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" @click="emitUserId()">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" @click="register()">Register</button>
     </form>
   </div>
 </template>
 
 <script>
-import { EventBus } from "../eventBus/event-bus.js";  
+// import { EventBus } from "../eventBus/event-bus.js";  
+
 export default {
     
   name: 'Login',
   data () {
     return {
-        id: '',
+        id: null,
       email: '',
       password: '',
       error: false
@@ -29,14 +31,15 @@ export default {
     login () {
         this.axios.get('/user')
         .then(response => {
-            console.log(response)
+            // console.log(response)
             response.data.forEach(user => {
                 if (user.email === this.email && user.password === this.password){
                     this.id = user.id
-                    console.log(this.id)
-                    this.loginSuccessful(this.id)
+                    // console.log(this.id)
+                    // this.loginSuccessful(this.id)
                     this.$router.replace(this.$route.query.redirect || '/vehicleCard')
-                    this.setUserId(this.id)
+                    // this.setUserId()
+                    this.emitUserId(this.id)
                 }
                 else {
                     this.loginFailed()
@@ -45,11 +48,11 @@ export default {
         })
         // .then(response => this.loginSuccessful(response))
         // .catch(() => this.loginFailed())
-         console.log(this.email)
-         console.log(this.password)
+        //  console.log(this.email)
+        //  console.log(this.password)
     },
     loginSuccessful () {
-        console.log('login')
+        // console.log('login')
         // if (!req.data.token) {
         //     this.loginFailed()
         //     return
@@ -59,15 +62,20 @@ export default {
         // this.error = false
 
         // this.$router.replace(this.$route.query.redirect || '/issue')
-        EventBus.$emit("loggedIn", this.id);
+        // EventBus.$emit("loggedIn", this.id);
         },
         loginFailed () {
         this.error = 'Login failed!'
         delete localStorage.token
         },
-        setUserId: function(userId) {
-            console.log(userId + 'user')
-            EventBus.$emit("clicked-login", userId);
+        emitUserId() {
+          this.$store.commit('change', this.id)
+          console.log(this.$store.getters.id)
+            // console.log('emit'+this.id)
+            // EventBus.$emit("user-id", this.id);
+        },
+        register() {
+          this.$router.replace(this.$route.query.redirect || '/signUp')
         }
   }
 }

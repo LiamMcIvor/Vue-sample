@@ -12,6 +12,7 @@
       <b-button :to="{ path: 'addIssue' }" variant="primary">Add Issue</b-button>
       <b-button @click="setIssueId()" :to="{ path: 'editIssue' }" variant="primary">Edit Issue</b-button>
       <b-button @click="showModal" variant="primary">Delete Issue</b-button>
+      <b-button @click="vehicles()" variant="primary">Vehicles</b-button>
       <!-- <b-button id="show-btn" @click="showModal">Open Modal</b-button> -->
       <b-modal ref="my-modal" hide-footer title="Delete Issue">
       <div class="d-block text-center">
@@ -29,7 +30,7 @@
 import { EventBus } from "../eventBus/event-bus.js";
 import axios from 'axios';
 // import VueSimpleAlert from "vue-simple-alert";
-const url = "http://localhost:8081/issue";
+const url = "http://localhost:8081/getVehicle/";
 const deleteUrl = "http://localhost:8081/issue/";
 
 export default {
@@ -48,13 +49,20 @@ export default {
         ]
       }
     },
+    created() {
+      console.log('1' + this.$store.getters.vehicleId)
+         axios.get(url + this.$store.getters.vehicleId).then(response => {
+           console.log(response)
+            this.items = response.data.issues
+         });
+    },
      mounted() {
-          axios.get(url).then(response => {
-            this.items = response.data
-            // eslint-disable-next-line no-console
-            console.log(response)
-            // console.log(this.items.issue_name)
-          })
+          // axios.get(url  + this.$store.getters.vehicleId).then(response => {
+          //   this.items = response.data.issues
+          //   // eslint-disable-next-line no-console
+          //   // console.log(response)
+          //   // console.log(this.items.issue_name)
+          // })
     },
     methods: {
        showModal() {
@@ -66,13 +74,15 @@ export default {
       deleteModal() {
         this.deleteIssue();
         this.$refs['my-modal'].hide();
+        this.getIssues();
       },
       rowSelected(record) {
         // eslint-disable-next-line no-console
         // console.log('id' + record.id)
         this.items.id = record.id
+        this.$store.commit('setIssue', this.items.id)
         // eslint-disable-next-line no-console
-        console.log('iiid' + this.items.id)
+        console.log('iiid' + this.$store.getters.issueId)
         // EventBus.$emit("clicked-issue", record.id);
             // return record.id
       },
@@ -83,27 +93,22 @@ export default {
         // return issueId;
       },
       getIssues: function() {
-        axios.get(url).then(response => {
-            this.items = response.data
+        axios.get(url + this.$store.getters.vehicleId).then(response => {
+            this.items = response.data.issues
             // eslint-disable-next-line no-console
-            console.log(response)
+            // console.log(response)
             // console.log(this.items.issue_name)
           })
       },
       deleteIssue: function() {
-        axios.delete(deleteUrl + this.items.id).then(response => {
-            this.results = response.data
+        axios.delete(deleteUrl + this.$store.getters.issueId).then(response => {
+            this.items = response.data
            this.getIssues();
-          //   this.mounted;
-          //   this.results.$forceUpdate
-            // let vehicleDiv = document.getElementById("vLoop");
-            // vehicleDiv.parentNode.removeChild(vehicleDiv);  
-            // eslint-disable-next-line no-console
-            console.log(response)
-            this.$forceUpdate();
-
           })
       },
+      vehicles() {
+        this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+      }
     },
     computed: {
       // id: function() {

@@ -61,10 +61,11 @@
  <!-- </div> -->
             </form>
             
-              <button
+              <v-btn
         @click="postPost()"
         class="btn"
-      >submit</button>
+        
+      >submit</v-btn>
     </div>
    
 </template>
@@ -132,16 +133,18 @@ export default {
      },
      methods: {
         postPost() {
-          if(!this.rules.validate()){
-          axios.patch(updateUrl + this.results.id, this.form)
+          // if(!this.rules.validate()){
+            console.log(this.$store.getters.issueId)
+          axios.patch(updateUrl + this.$store.getters.issueId, this.form)
           .then(response => {
             // eslint-disable-next-line no-console
-            console.log(response)
+            console.log('patch' + response)
+            this.$router.replace(this.$route.query.redirect || '/issue')
            })
           .catch(e => {
           this.errors.push(e)
           })
-          }
+          // }
         },
         getIssue(url) {
             // eslint-disable-next-line no-console

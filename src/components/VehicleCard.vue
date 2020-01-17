@@ -26,8 +26,8 @@
       Content of vehicle
     </b-card-text>
     <v-text-field>textfield</v-text-field>
-    <b-button :to="{ path: 'issue' }" variant="primary">View Issues</b-button>
-    <b-button @click="setVehicleId(vehicle.id)" :to="{ path: 'editVehicle'}" variant="primary">Edit Vehicle</b-button>
+    <b-button @click="storeVehicleId(vehicle.id)" variant="primary">View Issues</b-button>
+    <b-button @click="storeVehicleId(vehicle.id)" :to="{ path: 'editVehicle'}" variant="primary">Edit Vehicle</b-button>
     <b-button @click="deleteVehicle(vehicle.id)" variant="primary">Delete Vehicle</b-button>
   </b-card>
 
@@ -49,42 +49,54 @@ const deleteUrl = "http://localhost:8081/vehicle/";
 export default {
     e1: '#vdetails',
     name: 'VehicleCard',
-    props: {
-      id: {
-        type: String
-      }
-    },
     data () {
       
     return {
       renderComponent: true,
-      results: null
+      results: null,
+      id: null,
     }
-  },
+},
   created() {
-      // eslint-disable-next-line no-console
+     // eslint-disable-next-line no-console
               // console.log(this.results)
-              EventBus.$on("clicked-login", userId=> {  
-    url + userId
-        console.log(url)
-        // console.log('1' + url)
-        // this.getVehicle(url + userId);
-      });  
+              // console.log(url)
+        //       EventBus.$on("user-id", id=> {  
+    
+        // console.log(id)
+
+         axios.get(url + this.$store.getters.id).then(response => {
+
+            this.results = response.data.vehicles
+
+          // })
+        // this.getVehicles()
+      });   
     },
     mounted() {
-      EventBus.$on("clicked-login", userId=> {  
-        
-        url + userId
-        console.log(url)
-      });  
-          axios.get(url).then(response => {
-            // console.log(response)
-            console.log(response)
-            this.results = response.data.vehicles
-            // this.results = response.data[0].vehicles
-            // eslint-disable-next-line no-console
-            console.log(response)
-          })
+      //   EventBus.$on("user-id", id=> {  
+    
+      //   console.log(id)
+      //   // this.loadVehicles(url + id);
+      //   this.id = id;
+      //   const getUrl = url + id
+      //    axios.get(getUrl).then(response => {
+
+      //       this.results = response.data.vehicles
+
+      //     })
+      // });  
+        // console.log(this.id)
+        // this.getVehicles(url + this.id);
+   
+          // axios.get(url + this.id).then(response => {
+    //         // console.log(response)
+    //         console.log(response)
+            // this.results = response.data.vehicles
+    //         // this.results = response.data[0].vehicles
+    //         // eslint-disable-next-line no-console
+    //         console.log(response)
+          // })
     },
     methods: {
       setVehicleId: function(vehicleId){
@@ -96,18 +108,15 @@ export default {
       // addVehicle: function(){
       //   EventBus.$emit("clicked-add", userId);
       // },
-      forceRerender: function() {
-        // Remove my-component from the DOM
-        this.renderComponent = false;
-        
-        this.$nextTick(() => {
-          // Add the component back in
-          this.renderComponent = true;
-        });
-      },
       getVehicles: function() {
+        axios.get(url + this.$store.getters.id).then(response => {
+            this.results = response.data.vehicles
+            console.log(response)
+          })
+      },
+      loadVehicles(url) {
         axios.get(url).then(response => {
-            this.results = response.data
+            this.results = response.data[0].vehicles
             // eslint-disable-next-line no-console
             console.log(response)
           })
@@ -116,24 +125,22 @@ export default {
         axios.delete(deleteUrl + vehicleId).then(response => {
             this.results = response.data
            this.getVehicles();
-            // this.mounted;
-            // this.results.$forceUpdate
-            // let vehicleDiv = document.getElementById("vLoop");
-            // vehicleDiv.parentNode.removeChild(vehicleDiv);  
-            // eslint-disable-next-line no-console
             console.log(response)
-            // this.$forceUpdate();
-
           })
       },
-      // getVehicles: function() {
-      //   axios.get(url).then(response => {
-      //       this.results = response.data
-      //       // eslint-disable-next-line no-console
-      //       console.log(response)
-      //     })
-      // }
-      
+      setVehicle: function(vehicleId) {
+        console.log('v' +vehicleId)
+        this.$store.commit('vehicleSet', vehicleId)
+        console.log(this.$store.getters.vehicleId)
+        console.log()
+      },
+      storeVehicleId(vehicleId) {
+          this.$store.commit('vehicleSet', vehicleId)
+          console.log('vid' + this.$store.getters.vehicleId)
+          this.$router.replace(this.$route.query.redirect || '/issue')
+            // console.log('emit'+this.id)
+            // EventBus.$emit("user-id", this.id);
+        },
     }
 }
 </script>

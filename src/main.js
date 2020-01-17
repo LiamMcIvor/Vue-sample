@@ -19,6 +19,7 @@ import EditVehicle from './components/EditVehicle';
 import Login from './components/Login';
 // import { EventBus } from "./event-bus.js";  
 import axios from './backend/vue-axios';
+import { store } from './store/store'
 
 Vue.use(vuelidate);
 Vue.use(BootstrapVue);
@@ -49,5 +50,6 @@ new Vue({
   vuetify,
   router,
   axios,
+  store,
   render: h => h(App)
 }).$mount('#app')

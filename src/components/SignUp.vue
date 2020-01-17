@@ -25,11 +25,11 @@
         ></v-text-field>
         <v-text-field 
           v-model="form.password" label="Password"
-          :rules="[rules.required, rules.min]"
+          :rules="[rules.required]"
         ></v-text-field>
         <v-text-field 
           v-model="form.cPassword" label="Confirm Password"
-          :rules="[rules.required, rules.min, passwordConfirmationRule]"
+          :rules="[rules.required, passwordConfirmationRule]"
         ></v-text-field>
         </v-form>
         <b-button 
@@ -77,6 +77,7 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-console
             console.log(response)
+            this.$router.replace(this.$route.query.redirect || '/')
           })
           .catch(e => {
           this.errors.push(e)

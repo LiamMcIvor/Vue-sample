@@ -111,7 +111,7 @@
 // import VCalendar from 'v-calendar';
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/update/1";
+ const url = "http://localhost:8081/update/";
 
 export default {
     name: 'AddVehicle',
@@ -163,10 +163,11 @@ export default {
         postPost() {
             // eslint-disable-next-line no-console
             console.log(this.form)
-            axios.patch(url, this.form)
+            axios.patch(url + this.$store.getters.id, this.form)
             .then(response => {
               // eslint-disable-next-line no-console
               console.log(response)
+              this.$router.replace(this.$route.query.redirect || '/vehicleCard')
             })
             .catch(e => {
               this.errors.push(e)

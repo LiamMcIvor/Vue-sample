@@ -40,10 +40,10 @@
         </v-menu>
 
             </form>
-              <button
+              <v-btn
         @click="postPost()"
         class="btn"
-      >submit</button>
+      >submit</v-btn>
     </div>
 </template>
 
@@ -51,7 +51,7 @@
 // import { EventBus } from "../eventBus/event-bus.js";  
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/addIssue";
+ const url = "http://localhost:8081/addIssue/";
 
 export default {
     name: 'AddIssue',
@@ -95,9 +95,11 @@ export default {
       //   return issueId;
       // },
         postPost() {
-    axios.patch(url, this.form)
-    .then(response => {
+
+           axios.patch(url + this.$store.getters.vehicleId, this.form)
+          .then(response => {
             // eslint-disable-next-line no-console
+            this.$router.replace(this.$route.query.redirect || '/issue')
             console.log(response)
     })
     .catch(e => {
