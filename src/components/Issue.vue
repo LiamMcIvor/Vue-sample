@@ -4,7 +4,7 @@
 <div id="vehicleCard">
   <b-table striped hover :items="items" :fields="fields" @row-clicked="rowSelected">
     <template v-slot:cell(is_addressed)="row">
-        <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+        <b-form-checkbox ref="checked" v-model="row.detailsShowing" @change="row.toggleDetails">
           Issue Addressed
         </b-form-checkbox>
       </template>
@@ -13,6 +13,7 @@
       <b-button @click="setIssueId()" :to="{ path: 'editIssue' }" variant="primary">Edit Issue</b-button>
       <b-button @click="showModal" variant="primary">Delete Issue</b-button>
       <b-button @click="vehicles()" variant="primary">Vehicles</b-button>
+      <b-button @click="issueAddressed()" variant="primary">Confirm Update</b-button>
       <!-- <b-button id="show-btn" @click="showModal">Open Modal</b-button> -->
       <b-modal ref="my-modal" hide-footer title="Delete Issue">
       <div class="d-block text-center">
@@ -30,15 +31,16 @@
 import { EventBus } from "../eventBus/event-bus.js";
 import axios from 'axios';
 // import VueSimpleAlert from "vue-simple-alert";
-const url = "http://localhost:8081/getVehicle/";
-const deleteUrl = "http://localhost:8081/issue/";
+const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
+const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/issue/";
+const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateAddressed/";
 
 export default {
     name: 'Issue',
     data() {
       return {
         results: null,
-        fields: ['issueName', 'lastAddressed', 'urgency', 'is_addressed', 'addressBy'],
+        fields: ['issueName', 'lastAddressed', 'urgency', 'is_addressed'],
         items: [
           {
             id: null,
@@ -50,9 +52,7 @@ export default {
       }
     },
     created() {
-      console.log('1' + this.$store.getters.vehicleId)
          axios.get(url + this.$store.getters.vehicleId).then(response => {
-           console.log(response)
             this.items = response.data.issues
          });
     },
@@ -81,8 +81,10 @@ export default {
         // console.log('id' + record.id)
         this.items.id = record.id
         this.$store.commit('setIssue', this.items.id)
+        this.$store.commit('setIssueName', this.items.issueName)
+        this.$store.commit('setUrgency', this.items.urgency)
         // eslint-disable-next-line no-console
-        console.log('iiid' + this.$store.getters.issueId)
+        console.log('iiid' + this.$store.getters.issueName)
         // EventBus.$emit("clicked-issue", record.id);
             // return record.id
       },
@@ -107,12 +109,39 @@ export default {
           })
       },
       vehicles() {
-        this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+        this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+      },
+       addressBy: function() {
+        this.items.addressBy = this.items.lastAdressed;
+        console.log(this.items.lastAddressed)
+      },
+      issueAddressed() {
+        if(this.$refs['checked']) {
+          this.items.lastAdressed = new Date().toISOString().substr(0, 10)
+          console.log(this.items.issueName)
+          let addressed = {
+            // issueName: this.$store.getters.issueName,
+            lastAddressed: this.items.lastAdressed
+            // urgency: this.$store.getters.urgency
+          }
+          JSON.stringify(addressed)
+          console.log(this.items.lastAdressed)
+          axios.patch(updateUrl + this.$store.getters.issueId, addressed)
+          .then(response => {
+            // eslint-disable-next-line no-console
+            console.log('patch' + response)
+            // this.$router.replace(this.$route.query.redirect || '/issue')
+           })
+          .catch(e => {
+          this.errors.push(e)
+          })
+        }
+        
       }
     },
     computed: {
-      // id: function() {
-      //    rowSelected(record)
+      // addressBy: function() {
+      //   this.items.addressBy = this.items.lastAdressed;
       // }
     }
 }

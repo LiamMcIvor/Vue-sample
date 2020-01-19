@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'router';
 import VehicleCard from '@/components/VehicleCard';
-import Home from '@/components/Home';
+import SignUp from '@/components/SignUp';
 import Register from '@/components/Register';
 import Issue from '@/components/Issue';
 import AddVehicle from '@/components/AddVehicle';
@@ -13,10 +13,11 @@ import Login from '@/components/Login';
 Vue.use(Router);
 
 export default new Router({
+    
     routes: [
        
         {
-            path: '',
+            path: '/VehicleManagement/',
             name: 'Login',
             component: Login
         },
@@ -31,6 +32,11 @@ export default new Router({
             component: Register
         },
         {
+            path: '/signUp',
+            name: 'SignUp',
+            component: SignUp
+        },
+        {
             path: '/issue',
             name: 'Issue',
             component: Issue
@@ -38,7 +44,7 @@ export default new Router({
         {
             path: '/addVehicle',
             name: 'AddVehicle',
-            component: AddVehicle
+            component: AddVehicle,
         },
         {
             path: '/addIssue',
@@ -61,4 +67,5 @@ export default new Router({
             component: Login
         }
     ]
+    
 });

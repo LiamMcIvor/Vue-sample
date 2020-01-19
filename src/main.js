@@ -32,17 +32,88 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     // { path: '/', component: Home },
-    { path: '/vehicleCard', component: VehicleCard },
-    { path: '/signUp', component: SignUp },
-    { path: '/register', component: Register },
-    { path: '/issue', component: Issue },
-    { path: '/addVehicle', component: AddVehicle },
-    { path: '/addIssue', component: AddIssue },
-    { path: '/editIssue', component: EditIssue },
-    { path: '/editvehicle', component: EditVehicle },
-    { path: '/', component: Login },
+    { path: '/VehicleManagement/vehicleCard', component: VehicleCard, 
+    beforeEnter: ((to, from, next) => {
+      if (!store.state.isAuthenticated) {
+        // console.log('store')
+        next('/')
+      } else {
+        // console.log('store')
+        next()
+      }
+    })
+  },
+    { path: '/VehicleManagement/signUp', component: SignUp },
+    { path: '/VehicleManagement/register', component: Register },
+    { path: '/VehicleManagement/issue', component: Issue, 
+    beforeEnter: ((to, from, next) => {
+      if (!store.state.isAuthenticated) {
+        // console.log('store')
+        next('/')
+      } else {
+        // console.log('store')
+        next()
+      }
+    })
+  },
+    { path: '/VehicleManagement/addVehicle', component: AddVehicle,
+     beforeEnter: ((to, from, next) => {
+      if (!store.state.isAuthenticated) {
+        // console.log('store')
+        next('/')
+      } else {
+        // console.log('store')
+        next()
+      }
+    })
+    },
+    { path: '/VehicleManagement/addIssue', component: AddIssue, 
+    beforeEnter: ((to, from, next) => {
+      if (!store.state.isAuthenticated) {
+        // console.log('store')
+        next('/')
+      } else {
+        // console.log('store')
+        next()
+      }
+    })
+  },
+    { path: '/VehicleManagement/editIssue', component: EditIssue, 
+    beforeEnter: ((to, from, next) => {
+      if (!store.state.isAuthenticated) {
+        // console.log('store')
+        next('/')
+      } else {
+        // console.log('store')
+        next()
+      }
+    })
+  },
+    { path: '/VehicleManagement/editVehicle', component: EditVehicle, 
+    beforeEnter: ((to, from, next) => {
+      if (!store.state.isAuthenticated) {
+        // console.log('store')
+        next('/')
+      } else {
+        // console.log('store')
+        next()
+      }
+    })
+  },
+    { path: '/VehicleManagement/', name: 'Login', component: Login },
     // { path: '/about', component: About }
   ]
+})
+
+
+router.beforeEach((to, from, next) => {
+  if (!store.state.isAuthenticated) {
+    // console.log('store')
+    next()
+  } else {
+    // console.log('store')
+    next()
+  }
 })
 
 /* eslint-disable no-new */

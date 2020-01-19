@@ -45,7 +45,7 @@
 
 <script>
 import axios from 'axios';
-const url = "http://localhost:8081/user";
+const url = "http://3.8.223.175:8181/VehicleManagement/user";
 
 export default {
     data () {
@@ -77,7 +77,7 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-console
             console.log(response)
-            this.$router.replace(this.$route.query.redirect || '/')
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
           })
           .catch(e => {
           this.errors.push(e)

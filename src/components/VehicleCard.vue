@@ -1,6 +1,6 @@
 <template>
     
-<div id="vehicleCard" v-if="renderComponent">
+<div id="vehicleCard1" v-if="renderComponent" >
   <div id="vLoop"
     v-for="vehicle in results"
     :key="vehicle.id"
@@ -27,7 +27,7 @@
     </b-card-text>
     <v-text-field>textfield</v-text-field>
     <b-button @click="storeVehicleId(vehicle.id)" variant="primary">View Issues</b-button>
-    <b-button @click="storeVehicleId(vehicle.id)" :to="{ path: 'editVehicle'}" variant="primary">Edit Vehicle</b-button>
+    <b-button @click="editVehicle(vehicle.id)" variant="primary">Edit Vehicle</b-button>
     <b-button @click="deleteVehicle(vehicle.id)" variant="primary">Delete Vehicle</b-button>
   </b-card>
 
@@ -43,8 +43,8 @@
 <script>
 import { EventBus } from "../eventBus/event-bus.js";  
 import axios from 'axios';
-const url = "http://localhost:8081/get/";
-const deleteUrl = "http://localhost:8081/vehicle/";
+const url = "http://3.8.223.175:8181/VehicleManagement/get/";
+const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/vehicle/";
 
 export default {
     e1: '#vdetails',
@@ -74,29 +74,7 @@ export default {
       });   
     },
     mounted() {
-      //   EventBus.$on("user-id", id=> {  
     
-      //   console.log(id)
-      //   // this.loadVehicles(url + id);
-      //   this.id = id;
-      //   const getUrl = url + id
-      //    axios.get(getUrl).then(response => {
-
-      //       this.results = response.data.vehicles
-
-      //     })
-      // });  
-        // console.log(this.id)
-        // this.getVehicles(url + this.id);
-   
-          // axios.get(url + this.id).then(response => {
-    //         // console.log(response)
-    //         console.log(response)
-            // this.results = response.data.vehicles
-    //         // this.results = response.data[0].vehicles
-    //         // eslint-disable-next-line no-console
-    //         console.log(response)
-          // })
     },
     methods: {
       setVehicleId: function(vehicleId){
@@ -137,10 +115,14 @@ export default {
       storeVehicleId(vehicleId) {
           this.$store.commit('vehicleSet', vehicleId)
           console.log('vid' + this.$store.getters.vehicleId)
-          this.$router.replace(this.$route.query.redirect || '/issue')
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
             // console.log('emit'+this.id)
             // EventBus.$emit("user-id", this.id);
         },
+        editVehicle(vehicleId) {
+          this.$store.commit('vehicleSet', vehicleId)
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/editVehicle')
+        }
     }
 }
 </script>

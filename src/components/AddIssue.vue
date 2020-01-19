@@ -51,7 +51,7 @@
 // import { EventBus } from "../eventBus/event-bus.js";  
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/addIssue/";
+ const url = "http://3.8.223.175:8181/VehicleManagement/addIssue/";
 
 export default {
     name: 'AddIssue',
@@ -65,12 +65,12 @@ export default {
              menu: false,
              options: [
             { value: null, text: 'Please select an option' },
-          { value: '1', text: 'Daily' },
-          { value: '7', text: 'Weekly' },
-          { value: '14', text: 'Bi-Weekly' },
-          { value: '30', text: 'Monthly' },
-          { value: '182', text: 'Semi-Annualy' },
-          { value: '365', text: 'Annualy' }
+          { value: '1 day', text: 'Daily' },
+          { value: '1 week', text: 'Weekly' },
+          { value: '2 weeks', text: 'Bi-Weekly' },
+          { value: '1 month', text: 'Monthly' },
+          { value: '6 months', text: 'Semi-Annualy' },
+          { value: '1 year', text: 'Annualy' }
         ]
         }
     },
@@ -99,7 +99,7 @@ export default {
            axios.patch(url + this.$store.getters.vehicleId, this.form)
           .then(response => {
             // eslint-disable-next-line no-console
-            this.$router.replace(this.$route.query.redirect || '/issue')
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
             console.log(response)
     })
     .catch(e => {

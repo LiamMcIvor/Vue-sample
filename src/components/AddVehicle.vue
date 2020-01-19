@@ -111,7 +111,7 @@
 // import VCalendar from 'v-calendar';
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://localhost:8081/update/";
+ const url = "http://3.8.223.175:8181/VehicleManagement/update/";
 
 export default {
     name: 'AddVehicle',
@@ -151,46 +151,31 @@ export default {
       }
      },
      created() {
-      // eslint-disable-next-line no-console
-              // console.log(this.results)
-      //         EventBus.$on("clicked-event", vehicleId=> {  
-    
-      //   console.log(url)
-        
-      // });  
+
      },
+     
      methods: {
         postPost() {
-            // eslint-disable-next-line no-console
-            console.log(this.form)
             axios.patch(url + this.$store.getters.id, this.form)
             .then(response => {
-              // eslint-disable-next-line no-console
               console.log(response)
-              this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+              // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
             })
             .catch(e => {
               this.errors.push(e)
             })
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
           },
-          previewImage: function(event) {
-            // Reference to the DOM input element
-            var input = event.target;
-            // Ensure that you have a file before attempting to read it
-            if (input.files && input.files[0]) {
-                // create a new FileReader to read this image and convert to base64 format
-                var reader = new FileReader();
-                // Define a callback function to run, when FileReader finishes its job
-                reader.onload = (e) => {
-                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-                    // Read image as base64 and set to imageData
-                    this.imageData = e.target.result;
-                }
-                // Start the reader job - read file as a data url (base64 format)
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        }    
+      //     beforeRouteEnter (to, from, next) {
+      //  if (this.$store.state.isAuthenticated) {
+      //    console.log('store')
+      //    next()
+      //  } else {
+      //    console.log('store')
+      //    next({name: 'Login'})
+      //  }
+    //  }
+    }    
 }
 </script>
 

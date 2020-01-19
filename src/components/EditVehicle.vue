@@ -111,16 +111,6 @@
             <v-btn text color="primary" @click="$refs.menu2.save(form.motDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
-
-             <div class="file-upload-form">
-                Upload an image file for the vehicle:
-                <input type="file" @change="previewImage" accept="image/*">
-            </div>
-            <div class="image-preview" v-if="imageData.length > 0">
-                <img class="preview" :src="imageData">
-            </div>
-                
-            <!-- </div> -->
             </form> 
 
             <button
@@ -136,10 +126,10 @@
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
 //  import VehicleCard from './VehicleCard';
- import { EventBus } from "../eventBus/event-bus.js"; 
+//  import { EventBus } from "../eventBus/event-bus.js"; 
 
- const url = "http://localhost:8081/getVehicle/";
- const updateUrl = "http://localhost:8081/updateVehicle/";
+ const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
+ const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateVehicle/";
 
 export default {
     name: 'EditVehicle',
@@ -166,13 +156,13 @@ export default {
                 
         }
     },
-    created() {
-        EventBus.$on("clicked-event", vehicleId=> {  
-        console.log(url)
-        this.getVehicle(url + vehicleId);
-      });  
+    // created() {
+    //     EventBus.$on("clicked-event", vehicleId=> {  
+    //     console.log(url)
+    //     this.getVehicle(url + vehicleId);
+    //   });  
 
-    },
+    // },
     mounted() {
       // EventBus.$on("clicked-event", vehicleId=> {  
       //   url + vehicleId;
@@ -198,7 +188,11 @@ export default {
         }
       }
      },
-    
+      created() {
+      
+      this.getVehicle(url + this.$store.getters.vehicleId);
+     
+    },
      methods: {
         postPost() {
             axios.patch(updateUrl + this.results.id, this.form)
@@ -209,33 +203,13 @@ export default {
             .catch(e => {
               this.errors.push(e)
             })
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
           },
           getVehicle(url) {
-            // eslint-disable-next-line no-console
-            // console.log(this.form.id)
              axios.get(url).then(response => {
             this.results = response.data
-            // eslint-disable-next-line no-console
-            console.log('123' + response)
           })
-          },
-          previewImage: function(event) {
-            // Reference to the DOM input element
-            var input = event.target;
-            // Ensure that you have a file before attempting to read it
-            if (input.files && input.files[0]) {
-                // create a new FileReader to read this image and convert to base64 format
-                var reader = new FileReader();
-                // Define a callback function to run, when FileReader finishes its job
-                reader.onload = (e) => {
-                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-                    // Read image as base64 and set to imageData
-                    this.imageData = e.target.result;
-                }
-                // Start the reader job - read file as a data url (base64 format)
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+          }
         },
          computed: {
        id: function() {

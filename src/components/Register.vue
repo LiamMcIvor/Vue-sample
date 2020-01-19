@@ -56,7 +56,7 @@
 
 <script>
     import axios from 'axios';
-    const url = "http://localhost:8081/user";
+    const url = "http://3.8.223.175:8181/VehicleManagement/user";
 
   import {required, email} from 'vuelidate/lib/validators';
   export default {

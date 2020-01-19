@@ -3,7 +3,7 @@
 
 <div>
   <b-navbar toggleable="lg">
-    <b-navbar-brand :to="{ path: '/' }">Home</b-navbar-brand>
+    <b-navbar-brand @click="home()">Home</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -11,14 +11,14 @@
       <b-navbar-nav>
         <!-- <b-nav-item :to="{ path: '/' }">Home</b-nav-item> -->
         <b-nav-item :to="{ path: 'signUp' }">Sign Up</b-nav-item>
-        <b-nav-item :to="{ path: 'register' }">Register</b-nav-item>
+        <!-- <b-nav-item :to="{ path: 'register' }">Register</b-nav-item> -->
         <!-- :to="{name: 'VehicleCard'}" -->
-        <b-nav-item @click="clearVehicle()" :to="{ path: 'VehicleCard' }">Vehicles</b-nav-item>
-        <b-nav-item :to="{ path: 'addVehicle' }">Add Vehicle</b-nav-item>
+        <b-nav-item @click="clearVehicle()" :to="{ path: 'vehicleCard' }">Vehicles</b-nav-item>
+        <!-- <b-nav-item :to="{ path: 'addVehicle' }">Add Vehicle</b-nav-item>
         <b-nav-item :to="{ path: 'issue' }">Issues</b-nav-item>
         <b-nav-item :to="{ path: 'addIssue' }">Add Issue</b-nav-item>
         <b-nav-item :to="{ path: 'editIssue' }">Edit Issue</b-nav-item>
-        <b-nav-item :to="{ path: 'editVehicle' }">Edit Vehicle</b-nav-item>
+        <b-nav-item :to="{ path: 'editVehicle' }">Edit Vehicle</b-nav-item> -->
         <!-- <b-nav-item v-if="authenticated" :to="{ path: 'login' }" v-on:click.native="logout()" replace>Logout</b-nav-item>
         <router-view @authenticated="setAuthenticated" /> -->
       </b-navbar-nav>
@@ -33,9 +33,9 @@
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>
-            <em>User</em>
+            <em>Account</em>
           </template>
-          <b-dropdown-item href="#">Sign ip</b-dropdown-item>
+          <b-dropdown-item @click="signOut()" :to="{ path: '/VehicleManagement/' }">Sign out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -76,6 +76,13 @@ export default {
           clearVehicle() {
             this.$store.commit('vehicleSet', null)
             console.log(this.$store.getters.vehicleId)
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+          },
+          signOut() {
+            this.$store.commit('setAuthenticated', false)
+          },
+          home() {
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
           }
         },
 }

@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     login () {
-        this.axios.get('/user')
+        this.axios.get('user')
         .then(response => {
             // console.log(response)
             response.data.forEach(user => {
@@ -37,9 +37,11 @@ export default {
                     this.id = user.id
                     // console.log(this.id)
                     // this.loginSuccessful(this.id)
-                    this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+                    this.$store.commit('setAuthenticated', true);
+                    this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
                     // this.setUserId()
                     this.emitUserId(this.id)
+
                 }
                 else {
                     this.loginFailed()
@@ -75,7 +77,7 @@ export default {
             // EventBus.$emit("user-id", this.id);
         },
         register() {
-          this.$router.replace(this.$route.query.redirect || '/signUp')
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
         }
   }
 }

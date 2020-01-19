@@ -74,8 +74,8 @@
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
  import { EventBus } from "../eventBus/event-bus.js"; 
-const url = "http://localhost:8081/getIssue/";
- const updateUrl = "http://localhost:8081/updateIssue/";
+const url = "http://3.8.223.175:8181/VehicleManagement/getIssue/";
+ const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateIssue/";
 
 export default {
     name: 'EditIssue',
@@ -139,12 +139,12 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-console
             console.log('patch' + response)
-            this.$router.replace(this.$route.query.redirect || '/issue')
+            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
            })
           .catch(e => {
           this.errors.push(e)
           })
-          // }
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
         },
         getIssue(url) {
             // eslint-disable-next-line no-console
