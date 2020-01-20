@@ -1,7 +1,7 @@
 <template>
     <div id="vehicleCard">
         <h1 class="title">Edit Issue</h1>
-            <form class="form">
+            <v-form class="form" v-model="isValid">
             <!-- <div 
     v-for="issue in results"
     :key="issue"
@@ -18,10 +18,10 @@
             </div> -->
 
               <v-text-field
-                v-model="form.issueName"
+                v-model="form.make"
                  label="Issue Name"
-                :placeholder="results.issueName"
-                :rules="[rules.required]"
+                :placeholder="form.issueName"
+                :rules="[rules.required, rules.min, rules.letters]"
               ></v-text-field>
 
               <div class="form-group">
@@ -59,13 +59,13 @@
           </v-date-picker>
         </v-menu>
  <!-- </div> -->
-            </form>
-            
-              <v-btn
-        @click="postPost()"
+           </v-form>
+              <b-button
+        variant="outline-primary"
+          @click="postPost()"
+          :disabled="!isValid"
         class="btn"
-        
-      >submit</v-btn>
+      >submit</b-button>
     </div>
    
 </template>
@@ -74,19 +74,21 @@
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
  import { EventBus } from "../eventBus/event-bus.js"; 
-const url = "http://3.8.223.175:8181/VehicleManagement/getIssue/";
- const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateIssue/";
+// const url = "http://3.8.223.175:8181/VehicleManagement/getIssue/";
+//  const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateIssue/";
+const url = "http://localhost:8081/getIssue/";
+ const updateUrl = "http://localhost:8081/updateIssue/";
 
 export default {
     name: 'EditIssue',
     data() {
         return {
           rules:  {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters', 
-          message:'One lowercase letter required.',
-          email: v => /.+@.+/.test(v) || "E-mail must be valid"
-        },
+                  required: value => !!value || 'Required.',
+                  min: v => v.length >= 3 || 'Min 3 characters', 
+                  letters: v => /^[A-Za-z]+$/.test(v) || 'Can only contain letters'
+                 }, 
+            isValid: true,
             results: null,
             form: {
                 issueName: null,
@@ -144,7 +146,8 @@ export default {
           .catch(e => {
           this.errors.push(e)
           })
-          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
+          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
+          this.$router.replace(this.$route.query.redirect || '/issue')
         },
         getIssue(url) {
             // eslint-disable-next-line no-console

@@ -3,13 +3,13 @@
         <v-form v-model="isValid">
         <v-text-field
          v-model="form.firstName" label="First Name"
-         :rules="[rules.required]"
-         @change='checkEmpty($event, "name")'
+         :rules="[rules.required, rules.letters]"
+         
          :type="'String'"
         ></v-text-field>
         <v-text-field
          v-model="form.surname" label="Surname"
-         :rules="[rules.required]"
+         :rules="[rules.required, rules.letters]"
         ></v-text-field>
         <v-text-field
          v-model="form.postcode" label="Postcode"
@@ -26,14 +26,15 @@
         <v-text-field 
           v-model="form.password" label="Password"
           :rules="[rules.required]"
+          :type="'password'"
         ></v-text-field>
         <v-text-field 
           v-model="form.cPassword" label="Confirm Password"
           :rules="[rules.required, passwordConfirmationRule]"
+          :type="'password'"
         ></v-text-field>
         </v-form>
         <b-button 
-          href="#" 
           variant="outline-primary"
           @click="postPost()"
           :disabled="!isValid"
@@ -45,7 +46,9 @@
 
 <script>
 import axios from 'axios';
-const url = "http://3.8.223.175:8181/VehicleManagement/user";
+// inside name @change='checkEmpty($event, "name")'
+// const url = "http://3.8.223.175:8181/VehicleManagement/user";
+const url = "http://localhost:8081/user";
 
 export default {
     data () {
@@ -62,8 +65,9 @@ export default {
         },
         rules:  {
           required: value => !!value || 'Required.',
+          letters: v => /^[A-Za-z]+$/.test(v) || 'Can only contain letters',
           min: v => v.length >= 8 || 'Min 8 characters', 
-          email: v => /.+@.+/.test(v) || "E-mail must be valid",
+          email: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || "E-mail must be valid",
           uppercase: v => /(?=.*[A-Z])/.test(v) || 'Must have one uppercase character', 
           oneNumber: v => /(?=.*\d)/.test(v) || 'Must have one number', 
           special: v => /([!@$%])/.test(v) || 'Must have one special character [!@#$%]'
@@ -77,7 +81,8 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-console
             console.log(response)
-            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
+            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
+            this.$router.replace(this.$route.query.redirect || '/signUp')
           })
           .catch(e => {
           this.errors.push(e)

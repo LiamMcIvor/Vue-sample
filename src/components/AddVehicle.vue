@@ -1,20 +1,33 @@
 <template>
     <div id="vehicleCard">
           <h1 class="title">Add a Vehicle</h1>
-            <form class="form">
+            <v-form class="form" v-model="isValid">
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="form-label" for="make">Make</label>
                 <input v-model="$v.form.make.$model" type="text" placeholder="make" class="form-control" id="make">
-                <!-- <div v-if="$v.form.name.$error" class="error">first name is required</div> -->
+                <div v-if="$v.form.name.$error" class="error">first name is required</div> 
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="model">Model</label>
                 <input v-model="$v.form.model.$model" type="text" placeholder="model" class="form-control" id="model">
-                <!-- <div v-if="$v.form.name.$error" class="error">first name is required</div> -->
-            </div>
+                <div v-if="$v.form.name.$error" class="error">first name is required</div>
+            </div> -->
 
+               <v-text-field
+                v-model="form.make"
+                 label="Make"
+                :placeholder="form.make"
+                :rules="[rules.required, rules.min, rules.letters]"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="form.model"
+                 label="Model"
+                :placeholder="form.model"
+                :rules="[rules.required, rules.min, rules.letters]"
+              ></v-text-field>
              <v-menu
                  ref="menu1"
                  v-model="menu1"
@@ -89,34 +102,31 @@
             <v-btn text color="primary" @click="$refs.menu2.save(form.motDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
+            </v-form> 
 
-             <div class="file-upload-form">
-                Upload an image file for the vehicle:
-                <input type="file" @change="previewImage" accept="image/*">
-            </div>
-            <div class="image-preview" v-if="imageData.length > 0">
-                <img class="preview" :src="imageData">
-            </div>
-            </form> 
-
-            <button
+            <b-button
+            variant="outline-primary"
         @click="postPost()"
+
+        :disabled="!isValid"
         class="btn"
-      >submit</button>
+      >submit</b-button>
       
     </div>
 </template>
 
 <script>
 // import VCalendar from 'v-calendar';
- import {required} from 'vuelidate/lib/validators';
+//  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
- const url = "http://3.8.223.175:8181/VehicleManagement/update/";
+//  const url = "http://3.8.223.175:8181/VehicleManagement/update/";
+const url = "http://localhost:8081/update/";
 
 export default {
     name: 'AddVehicle',
     data() {
         return {
+          isValid: true,
             form: {
                 
                 make: null,
@@ -128,35 +138,20 @@ export default {
                 menu: false,
                 menu1: false,
                 menu2: false,
-                imageData: ""
+                rules:  {
+                  required: value => !!value || 'Required.',
+                  min: v => v.length >= 3 || 'Min 3 characters', 
+                  letters: v => /^[A-Za-z]+$/.test(v) || 'Can only contain letters'
+                 }
         }
     },
-    validations: {
-      form: {
-        make: {
-          required
-        },
-        model: {
-          required
-        },
-        taxDate: {
-          required
-        },
-        motDate: {
-          required
-        },
-        insuranceDate: {
-          required
-        }
-      }
-     },
      created() {
 
      },
-     
      methods: {
         postPost() {
             axios.patch(url + this.$store.getters.id, this.form)
+            // axios.patch(url, this.form)
             .then(response => {
               console.log(response)
               // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
@@ -164,17 +159,9 @@ export default {
             .catch(e => {
               this.errors.push(e)
             })
-            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            this.$router.replace(this.$route.query.redirect || '/vehicleCard')
           },
-      //     beforeRouteEnter (to, from, next) {
-      //  if (this.$store.state.isAuthenticated) {
-      //    console.log('store')
-      //    next()
-      //  } else {
-      //    console.log('store')
-      //    next({name: 'Login'})
-      //  }
-    //  }
     }    
 }
 </script>

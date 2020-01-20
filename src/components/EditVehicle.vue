@@ -1,7 +1,7 @@
 <template>
     <div id="vehicleCard">
           <h1 class="title">Edit Vehicle</h1>
-            <form class="form" >
+            <v-form class="form" v-model="isValid">
             <!-- <div 
                 v-for="vehicle in results"
                 
@@ -13,14 +13,14 @@
                 v-model="form.make"
                  label="Make"
                 :placeholder="results.make"
-                :rules="[rules.required, rules.min]"
+                :rules="[rules.required, rules.min, rules.letters]"
               ></v-text-field>
 
               <v-text-field
                 v-model="form.model"
                  label="Model"
                 :placeholder="results.model"
-                :rules="[rules.required, rules.min]"
+                :rules="[rules.required, rules.min, rules.letters]"
               ></v-text-field>
             <!-- <div class="form-group">
                 <label class="form-label" for="make">Make</label>
@@ -111,12 +111,14 @@
             <v-btn text color="primary" @click="$refs.menu2.save(form.motDate)">OK</v-btn>
           </v-date-picker>
         </v-menu>
-            </form> 
+            </v-form> 
 
-            <button
+            <b-button
+            variant="outline-primary"
                @click="postPost()"
+               :disabled="!isValid"
                class="btn"
-            >submit</button>
+            >submit</b-button>
       
     </div>
 </template>
@@ -128,14 +130,16 @@
 //  import VehicleCard from './VehicleCard';
 //  import { EventBus } from "../eventBus/event-bus.js"; 
 
- const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
- const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateVehicle/";
+//  const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
+//  const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateVehicle/";
+ const url = "http://localhost:8081/getVehicle/";
+ const updateUrl = "http://localhost:8081/updateVehicle/";
 
 export default {
     name: 'EditVehicle',
     data() {
         return {
-          
+          isValid: true,
             results: null,
             form: {
                 id: null,
@@ -148,10 +152,10 @@ export default {
                 menu: false,
                 menu1: false,
                 menu2: false,
-                imageData: "",
-                 rules:  {
+                rules:  {
                   required: value => !!value || 'Required.',
-                  min: v => v.length >= 8 || 'Min 3 characters', 
+                  min: v => v.length >= 3 || 'Min 3 characters', 
+                  letters: v => /^[A-Za-z]+$/.test(v) || 'Can only contain letters'
                  }
                 
         }
@@ -203,7 +207,8 @@ export default {
             .catch(e => {
               this.errors.push(e)
             })
-            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            this.$router.replace(this.$route.query.redirect || '/vehicleCard')
           },
           getVehicle(url) {
              axios.get(url).then(response => {

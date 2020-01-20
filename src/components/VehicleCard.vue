@@ -1,40 +1,40 @@
 <template>
-    
-<div id="vehicleCard1" v-if="renderComponent" >
+    <div id="addVehicle">
+<div id="vehicleCard1" v-if="!results" >
   <div id="vLoop"
     v-for="vehicle in results"
     :key="vehicle.id"
   >
   <div id="vehicle">
-  <b-card
-    title="Vehicle Details"
-    img-src="https://storage.kawasaki.eu/public/kawasaki.eu/en-EU/model/19ZX1000Y_201GY3DRS1CG_A.png"
-    img-alt="Image"
-    img-top
+  <b-card id="bCard"
     tag="article"
     style="max-width: 20rem;"
     class="mb-2"
   >
   <div id="vdetails">
-    <ul> Make: {{ vehicle.make  }} </ul>
-    <ul> Model: {{ vehicle.model }} </ul>
-    <ul> Tax Renewal Date: {{ vehicle.taxDate }} </ul>
-    <ul> Insurance Renewaql Date: {{ vehicle.insuranceDate }} </ul>
-    <ul> MOT Renewal Date: {{ vehicle.motDate }} </ul>
+    <h1>Vehicle Details</h1>
+    <h5> Make: {{ vehicle.make  }} </h5>
+    <h5> Model: {{ vehicle.model }} </h5>
+    <h5> Tax Renewal Date: {{ vehicle.taxDate }} </h5>
+    <h5> Insurance Renewal Date: {{ vehicle.insuranceDate }} </h5>
+    <h5> MOT Renewal Date: {{ vehicle.motDate }} </h5>
 </div>
-    <b-card-text>
-      Content of vehicle
-    </b-card-text>
-    <v-text-field>textfield</v-text-field>
+    <div id="vehicleButtons">
     <b-button @click="storeVehicleId(vehicle.id)" variant="primary">View Issues</b-button>
     <b-button @click="editVehicle(vehicle.id)" variant="primary">Edit Vehicle</b-button>
     <b-button @click="deleteVehicle(vehicle.id)" variant="primary">Delete Vehicle</b-button>
+    </div>
   </b-card>
 
   </div>
   </div>
-  <b-button @click="addVehicle(vehicle.id)" :to="{ path: 'addVehicle'}" variant="primary">Add Vehicle</b-button>
-</div>
+  </div>
+  <div id="noVehicles" v-if="results">
+    <h2>Welcome {{ this.$store.getters.userName }}</h2>
+    <h3>Add a vehicle and it will appear here</h3>
+  </div>
+  <b-button @click="addVehicle()" variant="primary">Add Vehicle</b-button>
+    </div>
 
 
 </template>
@@ -43,8 +43,10 @@
 <script>
 import { EventBus } from "../eventBus/event-bus.js";  
 import axios from 'axios';
-const url = "http://3.8.223.175:8181/VehicleManagement/get/";
-const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/vehicle/";
+// const url = "http://3.8.223.175:8181/VehicleManagement/get/";
+// const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/vehicle/";
+const url = "http://localhost:8081/get/";
+const deleteUrl = "http://localhost:8081/vehicle/";
 
 export default {
     e1: '#vdetails',
@@ -66,7 +68,7 @@ export default {
         // console.log(id)
 
          axios.get(url + this.$store.getters.id).then(response => {
-
+// axios.get(url + 1).then(response => {
             this.results = response.data.vehicles
 
           // })
@@ -115,13 +117,18 @@ export default {
       storeVehicleId(vehicleId) {
           this.$store.commit('vehicleSet', vehicleId)
           console.log('vid' + this.$store.getters.vehicleId)
-          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
+          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
+          this.$router.replace(this.$route.query.redirect || '/issue')
             // console.log('emit'+this.id)
             // EventBus.$emit("user-id", this.id);
         },
         editVehicle(vehicleId) {
           this.$store.commit('vehicleSet', vehicleId)
-          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/editVehicle')
+          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/editVehicle')
+          this.$router.replace(this.$route.query.redirect || '/editVehicle')
+        },
+        addVehicle() {
+          this.$router.replace(this.$route.query.redirect || '/addVehicle')
         }
     }
 }

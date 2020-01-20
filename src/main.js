@@ -32,89 +32,98 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     // { path: '/', component: Home },
-    { path: '/VehicleManagement/vehicleCard', component: VehicleCard, 
-    beforeEnter: ((to, from, next) => {
-      if (!store.state.isAuthenticated) {
-        // console.log('store')
-        next('/')
-      } else {
-        // console.log('store')
-        next()
-      }
-    })
+    // { path: '/VehicleManagement/vehicleCard', component: VehicleCard, 
+    { path: '/vehicleCard', component: VehicleCard, 
+    // beforeEnter: ((to, from, next) => {
+    //   if (!store.state.isAuthenticated) {
+    //     // console.log('store')
+    //     next('/')
+    //   } else {
+    //     // console.log('store')
+    //     next()
+    //   }
+    // })
   },
-    { path: '/VehicleManagement/signUp', component: SignUp },
-    { path: '/VehicleManagement/register', component: Register },
-    { path: '/VehicleManagement/issue', component: Issue, 
-    beforeEnter: ((to, from, next) => {
-      if (!store.state.isAuthenticated) {
-        // console.log('store')
-        next('/')
-      } else {
-        // console.log('store')
-        next()
-      }
-    })
+    // { path: '/VehicleManagement/signUp', component: SignUp },
+    { path: '/signUp', component: SignUp },
+    // { path: '/VehicleManagement/register', component: Register },
+    { path: '/register', component: Register },
+    // { path: '/VehicleManagement/issue', component: Issue, 
+    { path: '/issue', component: Issue, 
+    // beforeEnter: ((to, from, next) => {
+    //   if (!store.state.isAuthenticated) {
+    //     // console.log('store')
+    //     next('/')
+    //   } else {
+    //     // console.log('store')
+    //     next()
+    //   }
+    // })
   },
-    { path: '/VehicleManagement/addVehicle', component: AddVehicle,
-     beforeEnter: ((to, from, next) => {
-      if (!store.state.isAuthenticated) {
-        // console.log('store')
-        next('/')
-      } else {
-        // console.log('store')
-        next()
-      }
-    })
+    // { path: '/VehicleManagement/addVehicle', component: AddVehicle,
+    { path: '/addVehicle', component: AddVehicle,
+    //  beforeEnter: ((to, from, next) => {
+    //   if (!store.state.isAuthenticated) {
+    //     // console.log('store')
+    //     next('/')
+    //   } else {
+    //     // console.log('store')
+    //     next()
+    //   }
+    // })
     },
-    { path: '/VehicleManagement/addIssue', component: AddIssue, 
-    beforeEnter: ((to, from, next) => {
-      if (!store.state.isAuthenticated) {
-        // console.log('store')
-        next('/')
-      } else {
-        // console.log('store')
-        next()
-      }
-    })
+    // { path: '/VehicleManagement/addIssue', component: AddIssue, 
+    { path: 'addIssue', component: AddIssue, 
+    // beforeEnter: ((to, from, next) => {
+    //   if (!store.state.isAuthenticated) {
+    //     // console.log('store')
+    //     next('/')
+    //   } else {
+    //     // console.log('store')
+    //     next()
+    //   }
+    // })
   },
-    { path: '/VehicleManagement/editIssue', component: EditIssue, 
-    beforeEnter: ((to, from, next) => {
-      if (!store.state.isAuthenticated) {
-        // console.log('store')
-        next('/')
-      } else {
-        // console.log('store')
-        next()
-      }
-    })
+    // { path: '/VehicleManagement/editIssue', component: EditIssue, 
+    { path: '/editIssue', component: EditIssue, 
+    // beforeEnter: ((to, from, next) => {
+    //   if (!store.state.isAuthenticated) {
+    //     // console.log('store')
+    //     next('/')
+    //   } else {
+    //     // console.log('store')
+    //     next()
+    //   }
+    // })
   },
-    { path: '/VehicleManagement/editVehicle', component: EditVehicle, 
-    beforeEnter: ((to, from, next) => {
-      if (!store.state.isAuthenticated) {
-        // console.log('store')
-        next('/')
-      } else {
-        // console.log('store')
-        next()
-      }
-    })
+    // { path: '/VehicleManagement/editVehicle', component: EditVehicle, 
+    { path: '/editVehicle', component: EditVehicle, 
+    // beforeEnter: ((to, from, next) => {
+    //   if (!store.state.isAuthenticated) {
+    //     // console.log('store')
+    //     next('/')
+    //   } else {
+    //     // console.log('store')
+    //     next()
+    //   }
+    // })
   },
-    { path: '/VehicleManagement/', name: 'Login', component: Login },
+    // { path: '/VehicleManagement/', name: 'Login', component: Login },
+    { path: '/', name: 'Login', component: Login },
     // { path: '/about', component: About }
   ]
 })
 
 
-router.beforeEach((to, from, next) => {
-  if (!store.state.isAuthenticated) {
-    // console.log('store')
-    next()
-  } else {
-    // console.log('store')
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (!store.state.isAuthenticated) {
+//     // console.log('store')
+//     next()
+//   } else {
+//     // console.log('store')
+//     next()
+//   }
+// })
 
 /* eslint-disable no-new */
 new Vue({
