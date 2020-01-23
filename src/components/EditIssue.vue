@@ -18,7 +18,7 @@
             </div> -->
 
               <v-text-field
-                v-model="form.make"
+                v-model="form.issueName"
                  label="Issue Name"
                 :placeholder="form.issueName"
                 :rules="[rules.required, rules.min, rules.letters]"
@@ -74,10 +74,10 @@
  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
  import { EventBus } from "../eventBus/event-bus.js"; 
-// const url = "http://3.8.223.175:8181/VehicleManagement/getIssue/";
-//  const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateIssue/";
-const url = "http://localhost:8081/getIssue/";
- const updateUrl = "http://localhost:8081/updateIssue/";
+const url = "http://3.8.223.175:8181/VehicleManagement/getIssue/";
+ const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateIssue/";
+// const url = "http://localhost:8081/getIssue/";
+//  const updateUrl = "http://localhost:8081/updateIssue/";
 
 export default {
     name: 'EditIssue',
@@ -146,8 +146,8 @@ export default {
           .catch(e => {
           this.errors.push(e)
           })
-          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
-          this.$router.replace(this.$route.query.redirect || '/issue')
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
+          // this.$router.replace(this.$route.query.redirect || '/issue')
         },
         getIssue(url) {
             // eslint-disable-next-line no-console
@@ -155,7 +155,7 @@ export default {
              axios.get(url).then(response => {
             this.results = response.data
             // eslint-disable-next-line no-console
-            console.log('123' + response)
+            // console.log('123' + response)
           })
         }
       } 

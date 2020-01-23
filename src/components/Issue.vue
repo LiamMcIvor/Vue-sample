@@ -2,21 +2,21 @@
 <template>
     
 <div id="vehicleCard">
-  <b-table striped hover :items="items" :fields="fields" @row-clicked="rowSelected" v-if="!items">
+  <b-table striped hover :items="items" :fields="fields" @row-clicked="rowSelected" v-if="items">
     <template v-slot:cell(is_addressed)="row">
         <b-form-checkbox ref="checked" v-model="row.detailsShowing" @change="row.toggleDetails">
           Issue Addressed
         </b-form-checkbox>
       </template>
       </b-table>
-      <div id="noIssues" v-if="items">
+      <!-- <div id="noIssues" v-if="!items">
         <h2>Add an issue for your vehicle</h2>
-      </div>
+      </div> -->
       <b-button variant="outline-primary" :to="{ path: 'addIssue' }" >Add Issue</b-button>
-      <b-button v-if="this.$store.getters.issueId" variant="outline-primary" @click="setIssueId()" :to="{ path: 'editIssue' }" >Edit Issue</b-button>
-      <b-button v-if="this.$store.getters.issueId" @click="showModal" variant="outline-primary">Delete Issue</b-button>
+      <b-button variant="outline-primary" @click="setIssueId()" :to="{ path: 'editIssue' }" >Edit Issue</b-button>
+      <b-button @click="showModal" variant="outline-primary">Delete Issue</b-button>
       <b-button @click="vehicles()" variant="outline-primary">Vehicles</b-button>
-      <b-button v-if="this.$store.getters.issueId" @click="issueAddressed()" variant="outline-primary">Confirm Update</b-button>
+      <b-button @click="issueAddressed()" variant="outline-primary">Confirm Update</b-button>
       <!-- <b-button id="show-btn" @click="showModal">Open Modal</b-button> -->
       <b-modal ref="my-modal" hide-footer title="Delete Issue">
         
@@ -42,12 +42,12 @@
 import { EventBus } from "../eventBus/event-bus.js";
 import axios from 'axios';
 // import VueSimpleAlert from "vue-simple-alert";
-// const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
-// const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/issue/";
-// const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateAddressed/";
-const url = "http://localhost:8081/getVehicle/";
-const deleteUrl = "http://localhost:8081/issue/";
-const updateUrl = "http://localhost:8081/updateAddressed/";
+const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
+const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/issue/";
+const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateAddressed/";
+// const url = "http://localhost:8081/getVehicle/";
+// const deleteUrl = "http://localhost:8081/issue/";
+// const updateUrl = "http://localhost:8081/updateAddressed/";
 
 export default {
     name: 'Issue',
@@ -128,8 +128,8 @@ export default {
           })
       },
       vehicles() {
-        // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
-        this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+        this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+        // this.$router.replace(this.$route.query.redirect || '/vehicleCard')
       },
        addressBy: function() {
         this.items.addressBy = this.items.lastAdressed;

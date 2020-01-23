@@ -1,5 +1,4 @@
 <template>
-<div id="background">
   <div class="login-wrapper border border-light">
     <form class="form-signin" @submit.prevent="login">
       <h2 class="form-signin-heading">Please sign in</h2>
@@ -12,13 +11,12 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit" @click="register()">Register</button>
     </form>
   </div>
-  </div>
 </template>
 
 <script>
 // import { EventBus } from "../eventBus/event-bus.js";  
-import axios from 'axios';
-const url = "http://localhost:8081/user/1";
+// import axios from 'axios';
+// const url = "http://localhost:8081/user/";
 export default {
     
   name: 'Login',
@@ -33,7 +31,7 @@ export default {
   },
   methods: {
     login () {
-        axios.get(url)
+        this.axios.get('user')
         // axios.get(url)
         .then(response => {
             console.log(response)
@@ -45,8 +43,8 @@ export default {
                     // this.loginSuccessful(this.id)
                     this.$store.commit('setAuthenticated', true);
                     this.$store.commit('setUserName', this.userName);
-                    // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
-                    this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+                    this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+                    // this.$router.replace(this.$route.query.redirect || '/vehicleCard')
                     // this.setUserId()
                     this.emitUserId(this.id)
 
@@ -85,8 +83,8 @@ export default {
             // EventBus.$emit("user-id", this.id);
         },
         register() {
-          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
-          this.$router.replace(this.$route.query.redirect || '/signUp')
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
+          // this.$router.replace(this.$route.query.redirect || '/signUp')
         }
   }
 }

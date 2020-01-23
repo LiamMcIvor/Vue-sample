@@ -1,6 +1,6 @@
 <template>
     <div id="addVehicle">
-<div id="vehicleCard1" v-if="!results" >
+<div id="vehicleCard1">
   <div id="vLoop"
     v-for="vehicle in results"
     :key="vehicle.id"
@@ -22,14 +22,22 @@
     <div id="vehicleButtons">
     <b-button @click="storeVehicleId(vehicle.id)" variant="primary">View Issues</b-button>
     <b-button @click="editVehicle(vehicle.id)" variant="primary">Edit Vehicle</b-button>
-    <b-button @click="deleteVehicle(vehicle.id)" variant="primary">Delete Vehicle</b-button>
+    <b-button @click="deleteVehicle(vehicle.id)"  variant="primary">Delete Vehicle</b-button>
+    <!-- <b-modal ref="my-modal" hide-footer title="Delete Vehicle">
+        
+      <div class="d-block text-center">
+        <h3>Are you sure you would like to delete this vehicle?</h3>
+      </div>
+      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">No</b-button>
+      <b-button class="mt-2" variant="outline-warning" block @click="deleteModal">Yes, delete</b-button>
+    </b-modal> -->
     </div>
   </b-card>
 
   </div>
   </div>
   </div>
-  <div id="noVehicles" v-if="results">
+  <div id="noVehicles" v-if="results === null">
     <h2>Welcome {{ this.$store.getters.userName }}</h2>
     <h3>Add a vehicle and it will appear here</h3>
   </div>
@@ -43,10 +51,10 @@
 <script>
 import { EventBus } from "../eventBus/event-bus.js";  
 import axios from 'axios';
-// const url = "http://3.8.223.175:8181/VehicleManagement/get/";
-// const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/vehicle/";
-const url = "http://localhost:8081/get/";
-const deleteUrl = "http://localhost:8081/vehicle/";
+const url = "http://3.8.223.175:8181/VehicleManagement/get/";
+const deleteUrl = "http://3.8.223.175:8181/VehicleManagement/vehicle/";
+// const url = "http://localhost:8081/get/";
+// const deleteUrl = "http://localhost:8081/vehicle/";
 
 export default {
     e1: '#vdetails',
@@ -79,6 +87,19 @@ export default {
     
     },
     methods: {
+       showModal() {
+         this.$refs['my-modal'].show();
+        this.$store.commit('vehicleSet', this.id) 
+        // this.$refs['my-modal'].show()
+      },
+      hideModal() {
+        this.$refs['my-modal'].hide();
+      },
+      deleteModal() {
+        this.deleteVehicle(this.$store.getters.vehicleId)
+        this.$refs['my-modal'].hide();
+        this.getVehicles();
+      },
       setVehicleId: function(vehicleId){
         // eslint-disable-next-line no-console
             console.log(vehicleId)
@@ -109,26 +130,26 @@ export default {
           })
       },
       setVehicle: function(vehicleId) {
-        console.log('v' +vehicleId)
+        // console.log('v' +vehicleId)
         this.$store.commit('vehicleSet', vehicleId)
-        console.log(this.$store.getters.vehicleId)
-        console.log()
+        // console.log(this.$store.getters.vehicleId)
+        // console.log()
       },
       storeVehicleId(vehicleId) {
           this.$store.commit('vehicleSet', vehicleId)
-          console.log('vid' + this.$store.getters.vehicleId)
-          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
-          this.$router.replace(this.$route.query.redirect || '/issue')
+          // console.log('vid' + this.$store.getters.vehicleId)
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
+          // this.$router.replace(this.$route.query.redirect || '/issue')
             // console.log('emit'+this.id)
             // EventBus.$emit("user-id", this.id);
         },
         editVehicle(vehicleId) {
           this.$store.commit('vehicleSet', vehicleId)
-          // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/editVehicle')
-          this.$router.replace(this.$route.query.redirect || '/editVehicle')
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/editVehicle')
+          // this.$router.replace(this.$route.query.redirect || '/editVehicle')
         },
         addVehicle() {
-          this.$router.replace(this.$route.query.redirect || '/addVehicle')
+          this.$router.replace(this.$route.query.redirect || '/VehicleManagement/addVehicle')
         }
     }
 }

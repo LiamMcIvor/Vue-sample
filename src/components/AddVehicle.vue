@@ -106,7 +106,7 @@
 
             <b-button
             variant="outline-primary"
-        @click="postPost()"
+        @click="postPost(), refresh()"
 
         :disabled="!isValid"
         class="btn"
@@ -119,8 +119,8 @@
 // import VCalendar from 'v-calendar';
 //  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
-//  const url = "http://3.8.223.175:8181/VehicleManagement/update/";
-const url = "http://localhost:8081/update/";
+ const url = "http://3.8.223.175:8181/VehicleManagement/update/";
+// const url = "http://localhost:8081/update/";
 
 export default {
     name: 'AddVehicle',
@@ -160,8 +160,12 @@ export default {
               this.errors.push(e)
             })
             // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
-            this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+            // this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+            this.refresh()
           },
+          refresh() {
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+          }
     }    
 }
 </script>

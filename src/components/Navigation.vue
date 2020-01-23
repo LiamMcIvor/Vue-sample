@@ -33,7 +33,7 @@
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>
-            <em>{{ this.$store.getters.userName }}</em>
+            <!-- <em>{{ this.$store.getters.userName }}</em> -->
           </template>
           <!-- <b-dropdown-item @click="signOut()" :to="{ path: '/VehicleManagement/' }">Sign out</b-dropdown-item> -->
           <b-dropdown-item @click="signOut()" :to="{ path: '/' }">Sign out</b-dropdown-item>
@@ -77,15 +77,15 @@ export default {
           clearVehicle() {
             this.$store.commit('vehicleSet', null)
             console.log(this.$store.getters.vehicleId)
-            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
-            this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            // this.$router.replace(this.$route.query.redirect || '/vehicleCard')
           },
           signOut() {
             this.$store.commit('setAuthenticated', false)
           },
           home() {
-            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
-            this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            // this.$router.replace(this.$route.query.redirect || '/vehicleCard')
           }
         },
 }

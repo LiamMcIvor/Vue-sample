@@ -47,8 +47,8 @@
 <script>
 import axios from 'axios';
 // inside name @change='checkEmpty($event, "name")'
-// const url = "http://3.8.223.175:8181/VehicleManagement/user";
-const url = "http://localhost:8081/user";
+const url = "http://3.8.223.175:8181/VehicleManagement/user";
+// const url = "http://localhost:8081/user";
 
 export default {
     data () {
@@ -81,8 +81,8 @@ export default {
           .then(response => {
             // eslint-disable-next-line no-console
             console.log(response)
-            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/signUp')
-            this.$router.replace(this.$route.query.redirect || '/signUp')
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/')
+            // this.$router.replace(this.$route.query.redirect || '/signUp')
           })
           .catch(e => {
           this.errors.push(e)

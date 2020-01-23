@@ -52,6 +52,10 @@ body {
   margin: 100px;
 }
 
+#noVehicles {
+  margin: 300px;
+}
+
 #vehicleCard1 {
   margin: 100px;
   display: flex;
@@ -95,12 +99,12 @@ body {
   flex-direction: column;
 }
 
-#background {
-  background-image: url('http://wallpapersexpert.com/data/out/50/3726661-mechanic-wallpapers.jpg');
-  background-repeat:no-repeat;
-  background-size:contain;
-  height:200px;width:1200px;
-}
+// #background {
+  // background-image: url('http://wallpapersexpert.com/data/out/50/3726661-mechanic-wallpapers.jpg');
+  // background-repeat:no-repeat;
+  // background-size:contain;
+  // height:200px;width:1200px;
+// }
 
 button {
   color:white;

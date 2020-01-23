@@ -130,10 +130,10 @@
 //  import VehicleCard from './VehicleCard';
 //  import { EventBus } from "../eventBus/event-bus.js"; 
 
-//  const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
-//  const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateVehicle/";
- const url = "http://localhost:8081/getVehicle/";
- const updateUrl = "http://localhost:8081/updateVehicle/";
+ const url = "http://3.8.223.175:8181/VehicleManagement/getVehicle/";
+ const updateUrl = "http://3.8.223.175:8181/VehicleManagement/updateVehicle/";
+//  const url = "http://localhost:8081/getVehicle/";
+//  const updateUrl = "http://localhost:8081/updateVehicle/";
 
 export default {
     name: 'EditVehicle',
@@ -207,8 +207,8 @@ export default {
             .catch(e => {
               this.errors.push(e)
             })
-            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
-            this.$router.replace(this.$route.query.redirect || '/vehicleCard')
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+            // this.$router.replace(this.$route.query.redirect || '/vehicleCard')
           },
           getVehicle(url) {
              axios.get(url).then(response => {

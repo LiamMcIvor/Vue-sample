@@ -9,7 +9,7 @@
                 <div v-if="$v.form.name.$error" class="error">first name is required</div>
             </div> -->
             <v-text-field
-                v-model="form.make"
+                v-model="form.issueName"
                  label="Issue Name"
                 :placeholder="form.issueName"
                 :rules="[rules.required, rules.min, rules.letters]"
@@ -59,8 +59,8 @@
 // import { EventBus } from "../eventBus/event-bus.js";  
 //  import {required} from 'vuelidate/lib/validators';
  import axios from 'axios';
-//  const url = "http://3.8.223.175:8181/VehicleManagement/addIssue/";
-const url = "http://localhost:8081/addIssue/";
+ const url = "http://3.8.223.175:8181/VehicleManagement/addIssue/";
+// const url = "http://localhost:8081/addIssue/";
 
 export default {
     name: 'AddIssue',
@@ -101,15 +101,23 @@ export default {
            axios.patch(url + this.$store.getters.vehicleId, this.form)
           .then(response => {
             // eslint-disable-next-line no-console
-            // this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
-            this.$router.replace(this.$route.query.redirect || '/issue')
+            // this.$store.commit('setIssue', this.response.id)
+            
+            // this.$router.replace(this.$route.query.redirect || '/issue')
             console.log(response)
     })
     .catch(e => {
       this.errors.push(e)
+      this.$router.replace(this.$route.query.redirect || '/VehicleManagement/issue')
     })
+    this.refresh();
     }
-    } 
+    
+    },
+    refresh() {
+            this.$router.replace(this.$route.query.redirect || '/VehicleManagement/vehicleCard')
+          } 
+    
 }
 </script>
 
