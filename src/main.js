@@ -30,7 +30,6 @@ Vue.config.productionTip = false
 
 const router = new VueRouter({
   mode: 'history',
-  base: '/VehicleManagement/',
   routes: [
     // { path: '/', component: Home },
     { path: '/VehicleManagement/vehicleCard', component: VehicleCard, 
