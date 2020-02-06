@@ -58,7 +58,8 @@ pipeline {
         sh 'docker -v'
         unstash 'dist.tar.gz'
         unstash 'Dockerfile'
-        unstash 'nginx.conf'sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
+        unstash 'nginx.conf'
+        sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
         }
         stage('--dockerhub-push--') {
