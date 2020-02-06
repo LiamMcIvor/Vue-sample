@@ -32,9 +32,7 @@ pipeline {
     stage('Dependencies') {
       steps {
         sh 'npm cache clean --force'
-        
-        sh 'npm install'
-        sh  'sudo chown -R 1001:1001 "/.npm"'
+        sh 'npm install npm -g'
       }
     }
     stage('Build') {
