@@ -32,7 +32,7 @@ pipeline {
     stage('Dependencies') {
       steps {
         sh 'npm cache clear'
-        sh 'npm install -g npm@latest'
+        sh 'sudo npm install -g npm@latest'
       }
     }
     stage('Build') {
