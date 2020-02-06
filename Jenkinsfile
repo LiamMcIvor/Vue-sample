@@ -43,7 +43,7 @@ pipeline {
       stage('--docker-build--') {
         agent any
         	steps {
-        		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest . -v /var/jenkins_home:/var/jenkins_home"
+        		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
         }
         stage('--dockerhub-push--') {
