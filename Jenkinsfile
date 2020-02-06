@@ -17,7 +17,7 @@ pipeline {
         sh 'npm -v'
       }
     }
-    /*stage('Config') {
+    stage('Config') {
       steps {
         sh 'npm set registry https://registry.npm.taobao.org'
         sh 'npm set disturl https://npm.taobao.org/dist'
@@ -28,7 +28,7 @@ pipeline {
         sh 'npm set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass'
         sh 'npm set electron_mirror http://cdn.npm.taobao.org/dist/electron/'
       }
-    }*/
+    }
     stage('Dependencies') {
       steps {
         sh 'npm cache clear'
