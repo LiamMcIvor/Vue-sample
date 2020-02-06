@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Dependencies') {
       steps {
-        sh 'npm cache clear'
+        sh 'npm cache clean'
         sh 'sudo npm install -g npm@latest'
       }
     }
