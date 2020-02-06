@@ -52,9 +52,9 @@ pipeline {
         	}
         }*/
         stage('--docker-build--') {
-          agent {
+          agent 
             docker
-          }
+          
         	steps {
         		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
