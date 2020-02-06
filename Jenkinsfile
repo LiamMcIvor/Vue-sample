@@ -37,9 +37,7 @@ pipeline {
     }
       
       stage('--docker-build--') {
-        agent {
-          label 'any'
-        }
+        agent any
         	steps {
         		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
