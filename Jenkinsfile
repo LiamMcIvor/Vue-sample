@@ -44,7 +44,7 @@ pipeline {
         sh 'tar -czf dist.tar.gz ./dist'
         stash 'dist.tar.gz'
         stash 'Dockerfile'
-        stash 'nginx/nginx.conf'
+        stash 'nginx.conf'
         archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
       }
     }
@@ -58,7 +58,7 @@ pipeline {
         sh 'docker -v'
         unstash 'dist.tar.gz'
         unstash 'Dockerfile'
-        unstash '/nginx/nginx.conf'sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
+        unstash 'nginx.conf'sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
         }
         stage('--dockerhub-push--') {
