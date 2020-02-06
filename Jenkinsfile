@@ -8,6 +8,7 @@ pipeline {
       }
     }
     stage('Information') {
+      agent { docker { image 'node:8.12.0' } }
       steps {
         sh 'node -v'
         sh 'npm -v'
@@ -19,10 +20,12 @@ pipeline {
         HOME = '.'
     }
       steps {
+        agent { docker { image 'node:8.12.0' } }
         sh 'npm install'
       }
     }
     stage('Build') {
+      agent { docker { image 'node:8.12.0' } }
       steps {
         sh 'npm run build'
       }
