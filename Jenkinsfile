@@ -37,7 +37,7 @@ pipeline {
         archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
       }
     }
-    stage('Docker Image') {
+    /*stage('Docker Image') {
       agent {
         docker {
           image 'docker:dind'
@@ -50,7 +50,7 @@ pipeline {
         unstash 'nginx.conf'
         sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
-        }
+        }*/
         stage('--dockerhub-push--') {
         	steps {
         		withDockerRegistry([ credentialsId: "dockerhub-Liam", url: "" ]) {
