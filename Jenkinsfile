@@ -28,12 +28,12 @@ pipeline {
         sh 'npm set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass'
         sh 'npm set electron_mirror http://cdn.npm.taobao.org/dist/electron/'
       }
-    }
+    }*/
     stage('Dependencies') {
       steps {
         sh 'npm install'
       }
-    }*/
+    }
     stage('Build') {
       steps {
         sh 'npm run build'
