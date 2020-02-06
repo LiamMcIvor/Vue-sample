@@ -35,9 +35,11 @@ pipeline {
         archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
       }
     }
-       agent any
+      
       stage('--docker-build--') {
-        
+        agent {
+          label 'any'
+        }
         	steps {
         		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
