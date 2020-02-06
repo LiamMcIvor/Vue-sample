@@ -31,7 +31,7 @@ pipeline {
     }*/
     stage('Dependencies') {
       steps {
-        sh 'npm clean cache'
+        sh 'npm cache clean'
         sh 'npm install'
       }
     }
