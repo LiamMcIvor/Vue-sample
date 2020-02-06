@@ -51,6 +51,11 @@ pipeline {
         sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
         }*/
+        stage('--docker-build--') {
+        	steps {
+        		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
+        	}
+        }
         stage('--dockerhub-push--') {
         	steps {
         		withDockerRegistry([ credentialsId: "dockerhub-Liam", url: "" ]) {
