@@ -1,6 +1,8 @@
 pipeline {
-  agent none
-  
+  agent { docker { image 'node:8.12.0' } }
+    environment {
+        HOME = '.'
+    }
   stages {
     stage('Clone Sources') {
       steps {
@@ -8,24 +10,22 @@ pipeline {
       }
     }
     stage('Information') {
-      agent { docker { image 'node:8.12.0' } }
+      
       steps {
         sh 'node -v'
         sh 'npm -v'
       }
     }
     stage('Dependencies') {
-       agent { docker { image 'node:8.12.0' } }
+
     environment {
         HOME = '.'
     }
       steps {
-        agent { docker { image 'node:8.12.0' } }
         sh 'npm install'
       }
     }
     stage('Build') {
-      agent { docker { image 'node:8.12.0' } }
       steps {
         sh 'npm run build'
       }
