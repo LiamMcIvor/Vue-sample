@@ -1,10 +1,9 @@
 pipeline {
   
-  agent {
-    docker {
-      image 'node'
+   agent { docker { image 'node:8.12.0' } }
+    environment {
+        HOME = '.'
     }
-  }
   stages {
     stage('Clone Sources') {
       steps {
