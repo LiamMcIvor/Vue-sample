@@ -15,6 +15,7 @@ pipeline {
       steps {
         sh 'node -v'
         sh 'npm -v'
+        sh 'which npm'
       }
     }
     stage('Dependencies') {
