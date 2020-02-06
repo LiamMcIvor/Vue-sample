@@ -14,12 +14,10 @@ pipeline {
       steps {
         sh 'node -v'
         sh 'npm -v'
-        sh 'which npm'
       }
     }
     stage('Dependencies') {
       steps {
-        sh 'npm cache clean --force'
         sh 'npm install'
       }
     }
@@ -37,21 +35,7 @@ pipeline {
         archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
       }
     }
-    /*stage('Docker Image') {
-      agent {
-        docker {
-          image 'docker:dind'
-        }
-      }
-      steps {
-        sh 'docker -v'
-        unstash 'dist.tar.gz'
-        unstash 'Dockerfile'
-        unstash 'nginx.conf'
-        sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
-        	}
-        }*/
-        stage('--docker-build--') {
+      stage('--docker-build--') {
         	steps {
         		sh "docker build -t liammcivor/vehicle-front-end:$BUILD_NUMBER -t liammcivor/vehicle-front-end:latest ."
         	}
