@@ -9,7 +9,7 @@ pipeline {
         git 'https://github.com/LiamMcIvor/Vue-sample.git'
       }
     }
-    stage('Information') {
+    /*stage('Information') {
       
       steps {
         sh 'node -v'
@@ -39,7 +39,7 @@ pipeline {
         archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
       }
     }
-      
+      */
       stage('--docker-build--') {
         agent any
         	steps {
